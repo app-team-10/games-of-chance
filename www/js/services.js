@@ -15,6 +15,16 @@ angular.module('app.services', [])
                 email: user.email,
                 password: user.password
             }).then(function(regUser) {
+                
+                var regRef = new Firebase(FIREBASE_URL + 'users').child(regUser.uid).set({
+                    date: Firebase.ServerValue.TIMESTAMP,
+                    regUser: regUser.uid,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    username: user.username,
+                    email:  user.email
+                }); //user info
+                
                 $rootScope.message = "Hi " + user.firstname +
                 ", Thanks for registering";
             }).catch(function(error) {
