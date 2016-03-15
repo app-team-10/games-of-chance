@@ -63,16 +63,32 @@ angular.module('app.routes', ['ionicUIRouter'])
     abstract:true
   })
 
-  .state('signup', {
+  .state('tabsController.signup', {
     url: '/page5',
-    templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
+    views: {
+      'tab1': {
+        templateUrl: 'templates/signup.html',
+        controller: 'signupCtrl'
+      },
+      'tab3': {
+        templateUrl: 'templates/signup.html',
+        controller: 'signupCtrl'
+      }
+    }
   })
 
-  .state('login', {
+  .state('tabsController.login', {
     url: '/page6',
-    templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'
+    views: {
+      'tab1': {
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+      },
+      'tab3': {
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+      }
+    }
   })
 
   .state('tabsController.trustGame', {

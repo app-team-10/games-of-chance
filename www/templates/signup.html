@@ -1,4 +1,10 @@
 <ion-view style="" title="Signup">
+    <!--
+    <ion-nav-buttons side="primary">
+      <a class="button button-icon icon ion-arrow-left-b" href="#/page1/tab1/page3">
+      </a>
+    </ion-nav-buttons>
+    -->
     <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true">
         <form name="registerform" style="" class="list" ng-submit="register()" novalidate>
             <p class="message" ng-show="message">{{ message }}</p>
@@ -7,35 +13,36 @@
                 <label style="" class="item item-input">
                     <span class="input-label">First Name</span>
                     <input name="firstname" placeholder="First Name" type="text" ng-model="user.firstname" ng-required="true">
-                    <button class="error validationerror button button-assertive icon ion-close icon-left" ng-show="registerform.firstname.$invalid && registerform.firstname.$touched">First Name required</button>
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="registerform.firstname.$invalid && registerform.firstname.$touched">First Name required</button>
                 
                 <label style="" class="item item-input">
                     <span class="input-label">Last Name</span>
                     <input name="lastname" placeholder="Last Name" type="text" ng-model="user.lastname" ng-required="true">
-                    <button class="error validationerror button button-assertive icon ion-close icon-left" ng-show="registerform.lastname.$invalid && registerform.lastname.$touched">Last Name required</button>
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="registerform.lastname.$invalid && registerform.lastname.$touched">Last Name required</button>
                 
                 <label style="" class="item item-input">
                     <span class="input-label">User Name</span>
                     <input name="username" placeholder="awesome_like_qin" type="text" ng-model="user.username" ng-required="true">
-                    <button class="error validationerror button button-assertive icon ion-close icon-left" ng-show="registerform.username.$invalid && registerform.username.$touched">User Name required</button>
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="registerform.username.$invalid && registerform.username.$touched">User Name required</button>
                 
                 <label style="" class="item item-input">
                     <span class="input-label">Email</span>
                     <input name="email" placeholder="example.2016@qin.yu.com" type="email" ng-model="user.email" ng-required="true">
-                    <button class="error validationerror button button-assertive icon ion-close icon-left" ng-show="registerform.email.$invalid && registerform.email.$touched">Email required</button>
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="registerform.email.$invalid && registerform.email.$touched">Email required</button>
                 
                 <label style="" class="item item-input">
                     <span class="input-label">Password</span>
                     <input name="password" placeholder="520iLOVEqin520" type="password" ng-model="user.password" ng-required="true">
-                    <button class="error validationerror button button-assertive icon ion-close icon-left" ng-show="registerform.password.$invalid && registerform.password.$touched">Password required</button>
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="registerform.password.$invalid && registerform.password.$touched">Password required</button>
                 
             </ion-list>
             <button style="" type="submit" class="button button-stable button-block " >Sign up</button>
         </form>
+        <a style="" class="button button-positive button-clear button-block " ui-sref="tabsController.login" >Or log in with existing account</a>
     </ion-content>
 </ion-view>

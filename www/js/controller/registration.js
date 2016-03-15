@@ -1,7 +1,7 @@
 angular.module('registration', [])
 
 .controller('signupCtrl', function($scope, $firebaseAuth, FIREBASE_URL) {
-    $scope.message = "nothing!!";
+    $scope.message = "All fields required:";
     $scope.user = {};
     var ref = new Firebase(FIREBASE_URL);
     var auth = $firebaseAuth(ref);

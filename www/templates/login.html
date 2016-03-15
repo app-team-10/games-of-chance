@@ -1,4 +1,10 @@
 <ion-view style="" title="Login">
+    <!--
+    <ion-nav-buttons side="primary">
+      <a class="button button-icon icon ion-arrow-left-b" href="#/page1/tab1/page3">
+      </a>
+    </ion-nav-buttons>
+    -->
     <ion-content class="has-header" overflow-scroll="true" padding="true">
         <form style="" class="list">
             <ion-list style="">
@@ -13,7 +19,7 @@
             </ion-list>
             <div style="height: 40px;" class="spacer"></div>
             <a style="" class="button button-stable button-block " ui-sref="tabsController.profile">Log in</a>
-            <a style="" class="button button-positive button-clear button-block " onclick="window.open('/signup', '_system', 'location=yes'); return false;" href="#">Or create an account</a>
+            <a style="" class="button button-positive button-clear button-block " ui-sref="tabsController.signup" >Or create an account</a>
         </form>
     </ion-content>
 </ion-view>
