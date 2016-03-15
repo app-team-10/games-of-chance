@@ -1,4 +1,4 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['registration'])
   
 .controller('uCLGambleCtrl', function($scope) {
 
@@ -9,10 +9,6 @@ angular.module('app.controllers', [])
 })
    
 .controller('settingCtrl', function($scope) {
-
-})
-      
-.controller('signupCtrl', function($scope) {
 
 })
    
