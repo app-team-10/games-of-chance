@@ -6,19 +6,26 @@
     </ion-nav-buttons>
     -->
     <ion-content class="has-header" overflow-scroll="true" padding="true">
-        <form style="" class="list">
+        <form name="loginform" style="" class="list" ng-submit="login()" novalidate>
+            <p class="message" ng-show="message">{{ message }}</p>
             <ion-list style="">
+                
+                <!-- Email -->
                 <label style="" class="item item-input">
-                    <span class="input-label">Username</span>
-                    <input placeholder="" type="text">
+                    <span class="input-label">Email</span>
+                    <input name="email" placeholder="example.2016@qin.yu.com" type="email" ng-model="user.email" ng-required="true">
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="loginform.email.$invalid && loginform.email.$touched">Email required</button>
+                
                 <label style="" class="item item-input">
                     <span class="input-label">Password</span>
-                    <input placeholder="" type="password">
+                    <input name="password" placeholder="520iLOVEqin520" type="password" ng-model="user.password" ng-required="true">
                 </label>
+                <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="loginform.password.$invalid && loginform.password.$touched">Password required</button>
+                
             </ion-list>
             <div style="height: 40px;" class="spacer"></div>
-            <a style="" class="button button-stable button-block " ui-sref="tabsController.profile">Log in</a>
+            <a style="" type="submit" class="button button-stable button-block " >Log in</a>
             <a style="" class="button button-positive button-clear button-block " ui-sref="tabsController.signup" >Or create an account</a>
         </form>
     </ion-content>

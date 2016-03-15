@@ -82,11 +82,11 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab1': {
         templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
+        controller: 'signupCtrl'
       },
       'tab3': {
         templateUrl: 'templates/login.html',
-        controller: 'loginCtrl'
+        controller: 'signupCtrl'
       }
     }
   })
