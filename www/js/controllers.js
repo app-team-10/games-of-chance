@@ -12,10 +12,6 @@ angular.module('app.controllers', ['registration'])
 
 })
    
-.controller('loginCtrl', function($scope) {
-
-})
-   
 .controller('trustGameCtrl', function($scope) {
 
 })

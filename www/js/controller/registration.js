@@ -7,10 +7,12 @@ angular.module('registration', ['app.services'])
     $scope.user = {};
     
     $scope.login = function() {
-    Authentication.login($scope.user);
+        Authentication.login($scope.user);
+        console.log("registration.js has called services.js");
     }; //login
 
     $scope.register = function() {
-    Authentication.register($scope.user);
+        Authentication.register($scope.user);
+        console.log("registration.js has called services.js");
     }; // register
 })

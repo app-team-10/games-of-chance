@@ -41,7 +41,7 @@
                 <button class="error validationerror button button-block button-assertive icon ion-close icon-left" ng-show="registerform.password.$invalid && registerform.password.$touched">Password required</button>
                 
             </ion-list>
-            <button style="" type="submit" class="button button-stable button-block " >Sign up</button>
+            <button style="" type="submit" class="button button-stable button-block " ng-disabled="registerform.$invalid" >Sign up</button>
         </form>
         <a style="" class="button button-positive button-clear button-block " ui-sref="tabsController.login" >Or log in with existing account</a>
     </ion-content>

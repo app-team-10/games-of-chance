@@ -1,14 +1,32 @@
 angular.module('app.services', [])
 
-.factory('Authentication', ['$rootScope', '$firebaseAuth', 'FIREBASE_URL', function($rootScope, $firebaseAuth, FIREBASE_URL){
+.factory('Authentication', ['$state', '$location', '$rootScope', '$firebaseAuth', '$firebaseObject', 'FIREBASE_URL', function($state, $location, $rootScope, $firebaseAuth, $firebaseObject, FIREBASE_URL){
     var ref = new Firebase(FIREBASE_URL);
     var auth = $firebaseAuth(ref);
+    
+    auth.$onAuth(function(authUser) {
+        if (authUser) {
+            var userRef = new Firebase(FIREBASE_URL + 'users/' + authUser.uid );
+            var userObj = $firebaseObject(userRef);
+            $rootScope.currentUser = userObj;
+        } else {
+            $rootScope.currentUser = {firstname: 'qinCool'};
+        }
+    });
     
     return {
         // Because I input user into functions so $scope no longer needed:
         login: function(user) {
-            $rootScope.message = "Welcome " + $scope.user.email;
-        }, //login
+            console.log("user");
+            auth.$authWithPassword({
+                email: user.email,
+                password: user.password
+            }).then(function(regUser) {
+                console.log("a");
+            }).catch(function(error) {
+                console.log("b");
+            });
+        },
 
         register: function(user) {
             auth.$createUser({
@@ -16,21 +34,21 @@ angular.module('app.services', [])
                 password: user.password
             }).then(function(regUser) {
                 
+                // Edit here to modify user info that is to be loaded:
                 var regRef = new Firebase(FIREBASE_URL + 'users').child(regUser.uid).set({
                     date: Firebase.ServerValue.TIMESTAMP,
                     regUser: regUser.uid,
                     firstname: user.firstname,
                     lastname: user.lastname,
                     username: user.username,
-                    email:  user.email
-                }); //user info
+                    email:  user.email,
+                });
                 
-                $rootScope.message = "Hi " + user.firstname +
-                ", Thanks for registering";
+                $rootScope.message = "Hi " + user.firstname + ", Thanks for registering";
             }).catch(function(error) {
                 $rootScope.message = error.message;
-            }); // //createUser
-        } // register
+            });
+        } 
     };
 }])
 

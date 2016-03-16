@@ -1,5 +1,6 @@
 <ion-view style="" title="Login">
-    <!--
+ 
+    <!--   I use the following comment to get back, as there was no <back, because of routting issue
     <ion-nav-buttons side="primary">
       <a class="button button-icon icon ion-arrow-left-b" href="#/page1/tab1/page3">
       </a>
@@ -25,7 +26,16 @@
                 
             </ion-list>
             <div style="height: 40px;" class="spacer"></div>
-            <a style="" type="submit" class="button button-stable button-block " >Log in</a>
+            <!--
+                NOTE: (5 hours' work in a nutshell)
+                Just to remind myself and everyone...
+                  Do use BUTTON tag as a submit type!!!
+                  Do use BUTTON tag as a submit type!!!
+                  Do use BUTTON tag as a submit type!!!
+                OR u cannot submit...:D :D :D :D :D 
+                eg use <a></a> will confuse u till death
+            -->
+            <button style="" type="submit" class="button button-stable button-block " ng-disabled="loginform.$invalid" >Log in</button>
             <a style="" class="button button-positive button-clear button-block " ui-sref="tabsController.signup" >Or create an account</a>
         </form>
     </ion-content>
