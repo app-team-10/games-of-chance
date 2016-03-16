@@ -10,7 +10,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     
   
 
-      .state('tabsController.uCLGamble', {
+  .state('tabsController.uCLGamble', {
     url: '/page2',
     views: {
       'tab2': {
@@ -87,6 +87,20 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab3': {
         templateUrl: 'templates/login.html',
         controller: 'signupCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.success', {
+    url: '/success',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/success.html',
+        controller: 'successCtrl'
+      },
+      'tab3': {
+        templateUrl: 'templates/success.html',
+        controller: 'successCtrl'
       }
     }
   })

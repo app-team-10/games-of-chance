@@ -15,4 +15,8 @@ angular.module('registration', ['app.services'])
         Authentication.register($scope.user);
         console.log("registration.js has called services.js");
     }; // register
+    
+    $scope.logout = function() {
+        Authentication.logout();
+    }; //logout
 })

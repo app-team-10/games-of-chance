@@ -1,28 +1,38 @@
 <ion-view style="" title="Profile">
-    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
-        <div style="width: 300.25px; height: 14px;" class="spacer"></div>
-        <div style="text-align: center;">
-            <img src="img/5Q7ghyCGTUey3D9SUdHZ_qinYUphoto.jpg" width="40%" height="auto">
-        </div>
-        <div style="width: 300px; height: 31px;" class="spacer"></div>
-        <ion-list style="">
-            <ion-item style="" class="item-divider">Personal Info.</ion-item>
-            <ion-item style="">
-                <div class="userinfo" ng-show="currentUser">
-                    <span class="userinfo">Hi {{currentUser.firstname}}</span>
-                </div>
-            </ion-item>
-            <ion-item style="">qin.yu.15@ucl.ac.uk</ion-item>
-            <ion-item style="" class="item-divider">Payment Info.</ion-item>
-            <ion-list style="">
-                <ion-item style="">HSBC-1234 5678 9012 3456</ion-item>
+    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true" >
+        
+        <div ng-show="currentUser">
+            <div style="width: 300.25px; height: 14px;" class="spacer"></div>
+            
+            <div style="text-align: center;" >
+                <img src="img/5Q7ghyCGTUey3D9SUdHZ_qinYUphoto.jpg" width="40%" height="auto">
+            </div>
+            
+            <div style="width: 300px; height: 31px;" class="spacer"></div>
+
+
+            <ion-list style="" >
+                <ion-item style="" class="item-divider">Personal Info.</ion-item>
+                <ion-item style="">
+                    <div class="userinfo">
+                        <span class="userinfo">{{currentUser.firstname + ' ' + currentUser.lastname}}</span>
+                    </div>
+                </ion-item>
+                <ion-item style="">qin.yu.15@ucl.ac.uk</ion-item>
+                <ion-item style="" class="item-divider">Payment Info.</ion-item>
+                <ion-list style="">
+                    <ion-item style="">HSBC-1234 5678 9012 3456</ion-item>
+                </ion-list>
             </ion-list>
-        </ion-list>
-        <div class="userinfo" >
-            <span class="userinfo">Hi {{currentUser.firstname}}</span>
+            
+            <button style="" class="button button-stable button-clear button-block button-small" ui-sref="tabsController.login" ng-click="logout()" >Sign Out</button>
         </div>
-        <button style="" class="button button-stable button-clear button-block button-small">Sign Out</button>
-        <a style="" class="button button-positive button-outline button-block button-small" ui-sref="tabsController.login" >Log In</a>
-        <p>or <a ui-sref="tabsController.signup" >sign up</a></p>
+
+
+        <div ng-hide="currentUser">
+            <a style="" class="button button-positive button-outline button-block button-small" ui-sref="tabsController.login" >Log In</a>
+            <a style="" class="button button-positive button-outline button-block button-small" ui-sref="tabsController.signup">sign up</a>
+        </div>
+        
     </ion-content>
 </ion-view>

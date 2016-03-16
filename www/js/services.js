@@ -10,7 +10,8 @@ angular.module('app.services', [])
             var userObj = $firebaseObject(userRef);
             $rootScope.currentUser = userObj;
         } else {
-            $rootScope.currentUser = {firstname: 'qinCool'};
+            $rootScope.currentUser = '';
+            //$rootScope.currentUser = {firstname: 'qinCool'};
         }
     });
     
@@ -22,9 +23,11 @@ angular.module('app.services', [])
                 email: user.email,
                 password: user.password
             }).then(function(regUser) {
-                console.log("a");
+                console.log(user.email + " has been logged in.");
+                $state.go('tabsController.success');
             }).catch(function(error) {
-                console.log("b");
+                console.log(error.message);
+                $rootScope.message = error.message;
             });
         },
 
@@ -48,7 +51,12 @@ angular.module('app.services', [])
             }).catch(function(error) {
                 $rootScope.message = error.message;
             });
-        } 
+        },
+        
+        logout: function() {
+            return auth.$unauth();
+        }
+
     };
 }])
 
