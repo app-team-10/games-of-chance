@@ -9,13 +9,15 @@ angular.module('app.services', [])
             var userRef = new Firebase(FIREBASE_URL + 'users/' + authUser.uid );
             var userObj = $firebaseObject(userRef);
             $rootScope.currentUser = userObj;
+            $rootScope.message = "";
         } else {
             $rootScope.currentUser = '';
+            $rootScope.message = "You are not logged in.";
             //$rootScope.currentUser = {firstname: 'qinCool'};
         }
     });
     
-    return {
+    var authObj = {
         // Because I input user into functions so $scope no longer needed:
         login: function(user) {
             console.log("user");
@@ -47,6 +49,9 @@ angular.module('app.services', [])
                     email:  user.email,
                 });
                 
+                // Log-in after registration!
+                authObj.login(user);
+                
                 $rootScope.message = "Hi " + user.firstname + ", Thanks for registering";
             }).catch(function(error) {
                 $rootScope.message = error.message;
@@ -55,9 +60,17 @@ angular.module('app.services', [])
         
         logout: function() {
             return auth.$unauth();
+        },
+        
+        // For controlling authentication on success page:
+        requireAuth: function() {
+            return auth.$requireAuth();
         }
 
     };
+    
+    return authObj;
+    
 }])
 
 .service('BlankService', [function(){

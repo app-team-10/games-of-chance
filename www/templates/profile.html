@@ -1,6 +1,8 @@
 <ion-view style="" title="Profile">
     <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true" >
         
+        <auth-info></auth-info>
+        
         <div ng-show="currentUser">
             <div style="width: 300.25px; height: 14px;" class="spacer"></div>
             
@@ -18,7 +20,7 @@
                         <span class="userinfo">{{currentUser.firstname + ' ' + currentUser.lastname}}</span>
                     </div>
                 </ion-item>
-                <ion-item style="">qin.yu.15@ucl.ac.uk</ion-item>
+                <ion-item style="">{{currentUser.email}}</ion-item>
                 <ion-item style="" class="item-divider">Payment Info.</ion-item>
                 <ion-list style="">
                     <ion-item style="">HSBC-1234 5678 9012 3456</ion-item>

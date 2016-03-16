@@ -38,11 +38,11 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab1': {
         templateUrl: 'templates/profile.html',
-        controller: 'profileCtrl'
+        controller: 'signupCtrl'
       },
       'tab3': {
         templateUrl: 'templates/profile.html',
-        controller: 'profileCtrl'
+        controller: 'signupCtrl'
       }
     }
   })
@@ -96,11 +96,21 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab1': {
         templateUrl: 'templates/success.html',
-        controller: 'successCtrl'
+        controller: 'successCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } 
+        }
       },
       'tab3': {
         templateUrl: 'templates/success.html',
-        controller: 'successCtrl'
+        controller: 'successCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } 
+        }
       }
     }
   })

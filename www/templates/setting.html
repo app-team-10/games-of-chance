@@ -3,8 +3,8 @@
         <ion-list style="">
             <ion-item style="" ui-sref="tabsController.profile" class="item-thumbnail-left" ng-show="currentUser">
                 <img src="img/AISQTbMdRw2uIQ9l8JKQ_qinYUphoto.jpg">
-                <h2>Qin Yu</h2>
-                <p>qin.yu.15@ucl.ac.uk</p>
+                <h2>{{currentUser.firstname + ' ' + currentUser.lastname}}</h2>
+                <p>{{currentUser.email}}</p>
             </ion-item>
             <ion-item style="" class="item-divider">Settings</ion-item>
             <ion-toggle style="" name="selectToken" toggle-class="toggle-assertive" ng-checked="true">Play with Paypal</ion-toggle>

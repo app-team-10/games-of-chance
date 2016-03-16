@@ -28,16 +28,6 @@ angular.module('app.controllers', ['registration', 'app.services'])
 
 })
    
-.controller('profileCtrl', function($scope, Authentication) {
-//angular.module('registration', ['app.services'])
-    $scope.user = {};
-    
-    $scope.logout = function() {
-        Authentication.logout();
-        console.log("profileCtrl has called services.js");
-    }; //logout
-})
-   
 .controller('settingCtrl', function($scope) {
 
 })

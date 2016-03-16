@@ -1,6 +1,9 @@
 angular.module('app.directives', [])
 
-.directive('blankDirective', [function(){
-
+.directive('authInfo', [function(){
+    return{
+        restrict: 'E',
+        templateUrl: 'templates/authInfo.html'
+    };
 }]);
 
