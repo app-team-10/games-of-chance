@@ -1,22 +1,34 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['registration', 'app.services'])
+
+/**
+ * Very important: the dependencies and injections are in the same order!!
+ * Or it will say some $ is NOT a function.
+ */
+.controller('successCtrl', ['$scope', '$location', '$state', '$ionicHistory', '$timeout', function($scope, $location, $state, $ionicHistory, $timeout) {
+    /* 
+    In order to go back to profile but clear history:
+    $ionicHistory.clearHistory();
+    */
+    $ionicHistory.nextViewOptions({
+        disableAnimate: true,
+        // this is better, i think, than clearhistory:
+        historyRoot: true
+        //disableBack: true
+    });
+    $timeout(function() {
+        $state.go('tabsController.profile');
+        /*
+        $location.path('/page1/tab1/page3');
+        this is not a function ?? in ionic maybe.
+        */
+    }, 2000);
+}])
   
 .controller('uCLGambleCtrl', function($scope) {
 
 })
    
-.controller('profileCtrl', function($scope) {
-
-})
-   
 .controller('settingCtrl', function($scope) {
-
-})
-      
-.controller('signupCtrl', function($scope) {
-
-})
-   
-.controller('loginCtrl', function($scope) {
 
 })
    

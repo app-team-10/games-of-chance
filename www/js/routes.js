@@ -10,7 +10,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     
   
 
-      .state('tabsController.uCLGamble', {
+  .state('tabsController.uCLGamble', {
     url: '/page2',
     views: {
       'tab2': {
@@ -38,11 +38,11 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab1': {
         templateUrl: 'templates/profile.html',
-        controller: 'profileCtrl'
+        controller: 'signupCtrl'
       },
       'tab3': {
         templateUrl: 'templates/profile.html',
-        controller: 'profileCtrl'
+        controller: 'signupCtrl'
       }
     }
   })
@@ -63,16 +63,56 @@ angular.module('app.routes', ['ionicUIRouter'])
     abstract:true
   })
 
-  .state('signup', {
+  .state('tabsController.signup', {
     url: '/page5',
-    templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
+    views: {
+      'tab1': {
+        templateUrl: 'templates/signup.html',
+        controller: 'signupCtrl'
+      },
+      'tab3': {
+        templateUrl: 'templates/signup.html',
+        controller: 'signupCtrl'
+      }
+    }
   })
 
-  .state('login', {
+  .state('tabsController.login', {
     url: '/page6',
-    templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'
+    views: {
+      'tab1': {
+        templateUrl: 'templates/login.html',
+        controller: 'signupCtrl'
+      },
+      'tab3': {
+        templateUrl: 'templates/login.html',
+        controller: 'signupCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.success', {
+    url: '/success',
+    views: {
+      'tab1': {
+        templateUrl: 'templates/success.html',
+        controller: 'successCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } 
+        }
+      },
+      'tab3': {
+        templateUrl: 'templates/success.html',
+        controller: 'successCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } 
+        }
+      }
+    }
   })
 
   .state('tabsController.trustGame', {
