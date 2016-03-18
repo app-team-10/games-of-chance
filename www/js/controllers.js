@@ -27,6 +27,10 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool']
 .controller('uCLGambleCtrl', function($scope) {
 
 })
+
+.controller('selectionCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
+
+}])
    
 .controller('settingCtrl', function($scope) {
 
