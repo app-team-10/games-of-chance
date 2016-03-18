@@ -1,4 +1,5 @@
-angular.module('app.controllers', ['registration', 'app.services', 'publicpool'])
+angular.module('app.controllers', ['registration', 'app.services', 'publicpool', 'publicpoolCheck'])
+// Just found out the order of dependency matters: app.service before registration will cause currentUser undefined.
 
 /**
  * Very important: the dependencies and injections are in the same order!!
@@ -28,8 +29,9 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool']
 
 })
 
-.controller('selectionCtrl', ['$scope', '$rootScope', function($scope, $rootScope) {
-
+.controller('selectionCtrl', ['$scope', '$rootScope', 'Authentication', 'PublicpoolCheck', function($scope, $rootScope, Authentication, PublicpoolCheck) {
+// If no Authentication factory, the $rootScope.currentUser will be undefined: start the app as logged in, directly jump to Selection Tab then error, undefined.
+// The loading of currentUser's pool is done at loading login.html!
 }])
    
 .controller('settingCtrl', function($scope) {
