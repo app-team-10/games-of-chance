@@ -1,6 +1,12 @@
 <ion-view style="" title="Your Pool">
     <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true">
         
+        <label class="item item-icon-left">
+            <i class="icon ion-star"></i>
+            Pool Number
+            <span class="badge badge-calm">{{howManyPools}}</span>
+        </label>
+        
         <form class="list" name="joinpool" ng-submit="addPool()" novalidate>
             <div class="item item-divider">Join Pool</div>
             <label style="" class="item item-input item-icon-right">
@@ -11,7 +17,7 @@
         </form>
 
         <form class="list">
-            <div class="item item-divider">Your Meeting</div>
+            <div class="item item-divider">Your Pool</div>
             <label class="item item-icon-right" ng-repeat="(key, pool) in pools">
                 <span class="text">{{pool.name}}</span>
                 <button class="button button-icon icon icon-left ion-minus-circled assertive" ng-click="deletePool(key)"></button>
