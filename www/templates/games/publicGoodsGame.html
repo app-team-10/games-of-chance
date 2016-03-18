@@ -1,0 +1,22 @@
+<ion-view style="" title="Your Pool">
+    <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true">
+        
+        <form class="list" name="joinpool" ng-submit="addPool()" novalidate>
+            <div class="item item-divider">Join Pool</div>
+            <label style="" class="item item-input item-icon-right">
+                <span class="input-label">Pool</span>
+                <input type="text" name="poolname" placeholder="Pool name" ng-model="poolname.name" ng-required="true">
+                <button type="submit" class="button button-icon icon ion-plus-circled calm" ng-disabled="myform.$invalid"></button>
+            </label>
+        </form>
+
+        <form class="list">
+            <div class="item item-divider">Your Meeting</div>
+            <label class="item item-icon-right" ng-repeat="(key, pool) in pools">
+                <span class="text">{{pool.name}}</span>
+                <button class="button button-icon icon icon-left ion-minus-circled assertive" ng-click="deletePool(key)"></button>
+            </label>
+        </form>
+        
+    </ion-content>
+</ion-view>

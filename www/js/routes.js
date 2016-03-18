@@ -46,6 +46,16 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+  
+  .state('tabsController.selection', {
+    url: '/selection',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/selection.html',
+        controller: 'selectionCtrl'
+      }
+    }
+  })
 
   .state('tabsController.setting', {
     url: '/page4',
@@ -130,7 +140,22 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab2': {
         templateUrl: 'templates/publicGoods.html',
-        controller: 'publicGoodsCtrl'
+        //controller: 'publicGoodsCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.publicGoodsGame', {
+    url: '/publicGoodsGame',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games/publicGoodsGame.html',
+        controller: 'publicGoodsCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } //current Auth
+        } //resolve
       }
     }
   })
