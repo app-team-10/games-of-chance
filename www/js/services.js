@@ -1,1 +1,1 @@
-angular.module('app.services', ['authentication'])
+angular.module('app.services', ['authentication', 'publicpoolCheck'])
