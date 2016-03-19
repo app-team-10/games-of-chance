@@ -17,4 +17,8 @@ angular.module('publicpool', ['app.services'])
     $scope.deletePool = function(key) {
         PublicpoolCheck.deletePool(key);
     }; 
+    
+    $scope.joinPool = function (key) {
+        PublicpoolCheck.joinPool(key, false);
+    };
 })
