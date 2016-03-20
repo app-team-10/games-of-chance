@@ -28,8 +28,6 @@ angular.module('publicpoolCheck', [])
     
     var returnObj = {
         addPool : function(poolname) {
-            //var poolsRef = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.$id + '/pools');
-            //var poolsInfo = $firebaseArray(poolsRef);
             console.log(poolname.name);
             poolsInfo.$add({
                 name: poolname.name,
@@ -44,8 +42,6 @@ angular.module('publicpoolCheck', [])
         },
         
         deletePool : function(key) {
-            //var poolsRef = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.$id + '/pools');
-            //var poolsInfo = $firebaseArray(poolsRef);
             poolsInfo.$remove(key);
         },
                   
@@ -99,96 +95,29 @@ angular.module('publicpoolCheck', [])
             } else {
                 console.log("Wont become the owner.");
             }
+        },
+        
+        quitPool : function(key) {
+            var id = poolsInfo.$keyAt(key);
+            console.log("Pool's id is: " + id);
+            var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + id + '/poolees');
+            var poolees = $firebaseArray(pooleesRef);
+            
+            poolees.$loaded().then(function() {                
+                var i = 0;
+                for(i = 0; i < poolees.length; i++) {
+                    console.log(poolees.$getRecord(poolees.$keyAt(i)));
+                    var aPoolee = poolees.$getRecord(poolees.$keyAt(i));
+                    console.log(aPoolee.poolee);
+
+                    if(aPoolee.poolee == $rootScope.currentUser.regUser) {
+                        $rootScope.poolmessage = "You was inside.";
+                        console.log($rootScope.poolmessage);
+                        poolees.$remove(aPoolee);
+                    } 
+                } 
+            });
         }
-                  
-        // joinPoolAsOwner : function(key, isInitiator) {
-        //     var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + key + '/poolees');
-        //     var poolees = $firebaseArray(pooleesRef);
-        //     // Global because of inPool() function.
-            
-        //     console.log("The joinPool service is called. The poolees array is:");
-        //     console.log(poolees);
-            
-        //     // var inPool;
-        //     var inPoolBool = [];
-        //     angular.forEach(poolees, function(poolee){
-        //         console.log("poolee in poolees is:");
-        //         console.log(poolee);
-        //         if(poolee == {poolee : $rootScope.currentUser.regUser}) {
-        //             console.log("Already in this pool.");                        
-        //             this.push({inPool : true});
-        //         } else { 
-        //             console.log("Not yet in this pool.");                        
-        //             this.push({inPool : false});
-        //         }
-        //     }, inPoolBool);
-        //     console.log(inPoolBool);
-            
-        //     /** Following code for trying to figure out how can I check if the user is already in that pool: 
-        //      * 
-        //     angular.forEach(poolees, function(poolee){
-        //         if(thing == {poolee : $rootScope.currentUser.regUser}) {
-        //             console.log("Already in this pool.");                        
-        //             inPool = true;
-        //         } else { 
-        //             console.log("Not yet in this pool.");                        
-        //             inPool = false;
-        //         }
-        //     });
-            
-        //     function inPool(poolees) {
-        //         for(poolee in poolees) {
-        //             console.log(poolee);
-        //             if(poolee == {poolee : $rootScope.currentUser.regUser}) {
-        //                 console.log("Already in this pool.");                        
-        //                 return true;
-        //             } else { 
-        //                 console.log("Not yet in this pool.");                        
-        //                 return false;
-        //             }
-        //         }
-        //         var i = 0;
-        //         for(i = 0; i < poolees.length; i++) {
-        //             console.log(poolees[i]);
-        //             if(poolee[i] == {poolee : $rootScope.currentUser.regUser}) {
-        //                 console.log("Already in this pool.");                        
-        //                 return true;
-        //             } else { 
-        //                 console.log("Not yet in this pool.");                        
-        //                 return false;
-        //             }
-        //         }
-        //     } 
-            
-        //     console.log(inPool);            
-        //     */
-        //     if(poolees.length >= 5) {
-        //         $rootScope.poolmessage = "This pool is full";
-        //         console.log($rootScope.poolmessage);
-        //     } else if(inPoolBool.pop() == {inPool : true}) {
-        //         $rootScope.poolmessage = "You are inside already";
-        //         console.log($rootScope.poolmessage);
-        //     } else {
-        //         console.log("Becoming a poolee.");
-        //         console.log(poolees);
-        //         poolees.$add({
-        //             poolee : $rootScope.currentUser.regUser
-        //         }).then(console.log("Is a poolee."));
-        //     }
-            
-        //     if(isInitiator == true) {
-        //         var poolownerRef = new Firebase(FIREBASE_URL + 'pools/' + key + '/poolowner');
-        //         var poolowner = $firebaseArray(poolownerRef);
-                
-        //         console.log("Becoming the owner.");
-                
-        //         poolowner.$add({
-        //             owner : $rootScope.currentUser.regUser
-        //         });
-        //     } else {
-        //         console.log("Wont become the owner.");
-        //     }
-        // }
     }
     
     return returnObj;

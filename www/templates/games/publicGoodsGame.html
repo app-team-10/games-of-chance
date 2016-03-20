@@ -17,10 +17,10 @@
         </form>
 
         <form class="list">
-            <div class="item item-divider">Your Pool</div>
+            <div class="item item-divider">All Pools</div>
             <!--The following div has to be div rather than label, or joinPool() cannot be called successfully. -->
             <div class="item item-icon-left item-icon-right" ng-repeat="(key, pool) in pools">
-                <button class="button button-icon icon ion-minus-circled assertive" ng-click="deletePool(key)"></button>
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(key)"></button>
                 <span class="text">{{pool.name}}</span>
                 <button class="button button-icon icon ion-checkmark-circled royal" ng-click="joinPool(key, false)"></button>
             </div>

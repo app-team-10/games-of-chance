@@ -21,4 +21,8 @@ angular.module('publicpool', ['app.services'])
     $scope.joinPool = function (key) {
         PublicpoolCheck.joinPool(key, false);
     };
+    
+    $scope.quitPool = function (key) {
+        PublicpoolCheck.quitPool(key);
+    }
 })
