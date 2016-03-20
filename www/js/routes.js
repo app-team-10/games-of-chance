@@ -139,7 +139,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/page8',
     views: {
       'tab2': {
-        templateUrl: 'templates/publicGoods.html',
+        templateUrl: 'templates/games_intro/publicGoods.html',
         //controller: 'publicGoodsCtrl'
       }
     }

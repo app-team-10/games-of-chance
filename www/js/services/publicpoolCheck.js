@@ -9,9 +9,9 @@ angular.module('publicpoolCheck', [])
       if (authUser) {
         var poolsRef = new Firebase(FIREBASE_URL + 'pools');
         poolsInfo = $firebaseArray(poolsRef);
+        // Here poolsInfo is global because this service return an object where functions inside need poolsInfo.
         console.log("The poolsInfo is:");
         console.log(poolsInfo);
-        // Here poolsInfo is global because this service return an object where functions inside need poolsInfo.
         $rootScope.pools = poolsInfo;
         
         poolsInfo.$loaded().then(function(data) {

@@ -1,9 +1,14 @@
 <ion-view style="" title="Yours">
-    <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true" style="background: url(img/YSSSK9IjRUyQjregTA2v_pokerByQin_bot_compressed.jpg) no-repeat center;">
-        <label class="item item-icon-left">
-            <i class="icon ion-star"></i>
-            Pool Number
-            <span class="badge badge-calm">{{howManyPools}}</span>
-        </label>
+    <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true" style="background: url(img/YSSSK9IjRUyQjregTA2v_pokerByQin_bot_compressed.jpg) no-repeat center;" >
+        <div ng-hide="currentUser" style="text-align: center;">
+            See your activities here after authentication.
+        </div>
+        <div ng-show="currentUser">
+            <label class="item item-icon-left">
+                <i class="icon ion-star"></i>
+                Pool Number
+                <span class="badge badge-calm">{{howManyPools}}</span>
+            </label>
+        </div>
     </ion-content>
 </ion-view>
