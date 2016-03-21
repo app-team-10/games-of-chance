@@ -2,7 +2,7 @@ angular.module('publicpool', ['app.services'])
 
 .controller('publicGoodsCtrl', function($scope, PublicpoolCheck) {
       
-    $scope.poolname = {};
+    $scope.poolProp = {};
     /* 
     Note that ng-model can be used directly to create a string like poolname, so no need of making it an object.
     However, after adding 'ion-view'and 'ion-content' it has to be a key in an object to work.
@@ -10,8 +10,8 @@ angular.module('publicpool', ['app.services'])
     */
 
     $scope.addPool = function() {
-        PublicpoolCheck.addPool($scope.poolname);
-        $scope.poolname = {};
+        PublicpoolCheck.addPool($scope.poolProp);
+        $scope.poolProp = {};
     };
 
     $scope.deletePool = function(key) {
@@ -19,7 +19,7 @@ angular.module('publicpool', ['app.services'])
     }; 
     
     $scope.joinPool = function (key) {
-        PublicpoolCheck.joinPool(key, false);
+        //PublicpoolCheck.joinPool(key, false);
     };
     
     $scope.quitPool = function (key) {

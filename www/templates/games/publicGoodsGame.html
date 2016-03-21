@@ -7,12 +7,18 @@
             <span class="badge badge-calm">{{howManyPools}}</span>
         </label>
         
+        <div style="width: 300.25px; height: 16px;" class="spacer"></div>
+
         <form class="list" name="joinpool" ng-submit="addPool()" novalidate>
-            <div class="item item-divider">Join Pool</div>
+            <div class="item item-divider">Start A New Pool</div>
             <label style="" class="item item-input item-icon-right">
-                <span class="input-label">Pool</span>
-                <input type="text" name="poolname" placeholder="Pool name" ng-model="poolname.name" ng-required="true">
+                <span class="input-label">Name</span>
+                <input type="text" name="poolname" placeholder="Something Attractive" ng-model="poolProp.name" ng-required="true">
                 <button type="submit" class="button button-icon icon ion-plus-circled calm" ng-disabled="myform.$invalid"></button>
+            </label>
+            <label style="" class="item item-input item-icon-right">
+                <span class="input-label">Fund</span>
+                <input type="number" min="1" name="fund" placeholder="Your Points to Invest" ng-model="poolProp.fund" ng-required="true">
             </label>
         </form>
 

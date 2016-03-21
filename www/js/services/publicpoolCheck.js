@@ -27,15 +27,17 @@ angular.module('publicpoolCheck', [])
     });
     
     var returnObj = {
-        addPool : function(poolname) {
-            console.log(poolname.name);
+        addPool : function(poolProp) {
+            console.log(poolProp.name + ' ' + poolProp.fund);
+            addPool_fund = poolProp.fund; 
             poolsInfo.$add({
-                name: poolname.name,
+                name: poolProp.name,
                 date: Firebase.ServerValue.TIMESTAMP
             }).then(function(ref) {
                 var id = ref.key();
-                poolname={};
-                returnObj.joinPool(id, true);
+                poolProp={};
+                returnObj.joinPool(id, addPool_fund, true);
+                // console.log("check if poolProp.fund is passed to this function:" + poolProp.fund);
                 console.log(ref);
                 console.log(id);
             }); // Note: Because 'then' gives the id stright away, the joinPool needs to change correspondingly.
@@ -45,7 +47,7 @@ angular.module('publicpoolCheck', [])
             poolsInfo.$remove(key);
         },
                   
-        joinPool : function(key, isOwner) {
+        joinPool : function(key, fund, isOwner) {
             if(isOwner === true) {
                 var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + key + '/poolees');
             } else {
@@ -56,6 +58,7 @@ angular.module('publicpoolCheck', [])
             var poolees = $firebaseArray(pooleesRef);
             
             // MUST have $loaded or the LENGTH of array is 0.
+            joinPool_fund = fund;
             poolees.$loaded().then(function() {                
                 if(poolees.length >= 5) {
                     $rootScope.poolmessage = "This pool is full";
@@ -77,7 +80,8 @@ angular.module('publicpoolCheck', [])
                         console.log("Becoming a poolee.");
                         // console.log(poolees);
                         poolees.$add({
-                            poolee : $rootScope.currentUser.regUser
+                            poolee : $rootScope.currentUser.regUser,
+                            fund : joinPool_fund
                         }).then(console.log("Is a poolee."));
                     }
                 }
