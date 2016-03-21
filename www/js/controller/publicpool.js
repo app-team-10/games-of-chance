@@ -1,6 +1,6 @@
 angular.module('publicpool', ['app.services'])
 
-.controller('publicGoodsCtrl', function($scope, PublicpoolCheck) {
+.controller('publicGoodsCtrl', function($scope, $ionicPopup, PublicpoolCheck) {
       
     $scope.poolProp = {};
     /* 
@@ -19,10 +19,38 @@ angular.module('publicpool', ['app.services'])
     }; 
     
     $scope.joinPool = function (key) {
-        //PublicpoolCheck.joinPool(key, false);
+        $scope.data = {};
+        $scope.data.key = key;
+
+        var fundPopup = $ionicPopup.show({
+            template: '<input type="number" ng-model="data.fund">',
+            title: 'Enter Your Investment',
+            subTitle: 'Please enter a positive integer',
+            scope: $scope,
+            buttons: [
+                { text: 'Cancel' },
+                {   
+                    text: '<b>Join</b>',
+                    type: 'button-calm',
+                    onTap: function(e) {
+                        if (!$scope.data.fund) {
+                            //don't allow the user to close unless he enters fund.
+                            e.preventDefault();
+                        } else {
+                            return $scope.data.fund;
+                        }
+                    }
+                }
+            ]
+        });
+
+        fundPopup.then(function(res) {
+            console.log('Tapped!', res);
+            PublicpoolCheck.joinPool($scope.data.key, $scope.data.fund, false);
+        });
     };
     
     $scope.quitPool = function (key) {
         PublicpoolCheck.quitPool(key);
-    }
+    };
 })

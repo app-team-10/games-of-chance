@@ -9,12 +9,12 @@
         
         <div style="width: 300.25px; height: 16px;" class="spacer"></div>
 
-        <form class="list" name="joinpool" ng-submit="addPool()" novalidate>
+        <form class="list" name="newpoolform" ng-submit="addPool()" novalidate>
             <div class="item item-divider">Start A New Pool</div>
             <label style="" class="item item-input item-icon-right">
                 <span class="input-label">Name</span>
                 <input type="text" name="poolname" placeholder="Something Attractive" ng-model="poolProp.name" ng-required="true">
-                <button type="submit" class="button button-icon icon ion-plus-circled calm" ng-disabled="myform.$invalid"></button>
+                <button type="submit" class="button button-icon icon ion-plus-circled calm" ng-disabled="newpoolform.$invalid"></button>
             </label>
             <label style="" class="item item-input item-icon-right">
                 <span class="input-label">Fund</span>
