@@ -23,6 +23,24 @@ angular.module('publicpoolCheck', [])
             $rootScope.howManyPools = poolsInfo.length;
             console.log($rootScope.howManyPools);
         });
+        
+        // For quiting:
+        var poolsRefUserRecord = new Firebase(FIREBASE_URL + 'users/' + authUser.uid + '/userPools');
+        // Here if use $rootScope.currentUser.regUser instead of authUser.uid, 0 pool is shown.
+        poolsInfoUserRecord = new $firebaseArray(poolsRefUserRecord);
+        console.log("The poolsInfoUserRecord is:");
+        console.log(poolsInfoUserRecord);
+        $rootScope.poolsUserRecord = poolsInfoUserRecord;
+        
+        poolsInfoUserRecord.$loaded().then(function(data) {
+            $rootScope.howManyPoolsUserHas = poolsInfoUserRecord.length;
+            console.log($rootScope.howManyPoolsUserHas);
+        }); //Make sure pool data is loaded
+
+        poolsInfoUserRecord.$watch(function(data) {
+            $rootScope.howManyPoolsUserHas = poolsInfoUserRecord.length;
+            console.log($rootScope.howManyPoolsUserHas);
+        });
       }
     });
     
@@ -47,19 +65,22 @@ angular.module('publicpoolCheck', [])
             poolsInfo.$remove(key);
         },
                   
-        joinPool : function(key, fund, isOwner) {
+        joinPool : function(keyJoin, fund, isOwner) {
             if(isOwner === true) {
-                var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + key + '/poolees');
+                var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyJoin + '/poolees');
             } else {
-                var id = poolsInfo.$keyAt(key);
-                console.log("Pool's id is: " + id);
-                var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + id + '/poolees');
+                keyJoin = poolsInfo.$keyAt(keyJoin);
+                console.log("The next line should be pool's id");
+                console.log("The pool id is" + keyJoin);
+                // Global because its used to add pool in users' pools.
+                console.log("Pool's id is: " + keyJoin);
+                var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyJoin + '/poolees');
             }
             var poolees = $firebaseArray(pooleesRef);
             
             // MUST have $loaded or the LENGTH of array is 0.
             joinPool_fund = fund;
-            poolees.$loaded().then(function() {                
+            poolees.$loaded().then(function() {
                 if(poolees.length >= 5) {
                     $rootScope.poolmessage = "This pool is full";
                     console.log($rootScope.poolmessage);
@@ -77,13 +98,21 @@ angular.module('publicpoolCheck', [])
                         } // Note: inPool value is either true or undefined.
                     } 
                     if(inPool !== true) {
-                        console.log("Becoming a poolee.");
+                        console.log("Becoming a poolee. " + "There are now " + poolees.length + " poolees");
                         // console.log(poolees);
                         poolees.$add({
                             poolee : $rootScope.currentUser.regUser,
                             fund : joinPool_fund
-                        }).then(console.log("Is a poolee."));
+                        }).then(function() {
+                            console.log("Is a poolee. " + "There are now " + poolees.length + " poolees");
+                            returnObj.joinPoolInUserRecord(keyJoin);
+                        });
                     }
+                }
+                
+                console.log("There are now still " + poolees.length + " poolees")
+                if(poolees.length = 4) {
+                    // Action to share!
                 }
             });
             
@@ -101,10 +130,17 @@ angular.module('publicpoolCheck', [])
             }
         },
         
-        quitPool : function(key) {
-            var id = poolsInfo.$keyAt(key);
-            console.log("Pool's id is: " + id);
-            var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + id + '/poolees');
+        joinPoolInUserRecord : function(keyJoinRecord) {
+            // Push generates hash code while update dont, so to avoid overwriting:
+            var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).child('userPools').push({
+                pool : keyJoinRecord
+            });
+        },
+        
+        quitPool : function(keyQuit) {
+            var keyQuit = poolsInfo.$keyAt(keyQuit);
+            console.log("Pool's id is: " + keyQuit);
+            var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyQuit + '/poolees');
             var poolees = $firebaseArray(pooleesRef);
             
             poolees.$loaded().then(function() {                
@@ -121,7 +157,26 @@ angular.module('publicpoolCheck', [])
                     } 
                 } 
             });
-        }
+        },
+        
+        // quitPoolInUserRecord : function(keyQuitRecord) {
+        //     var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).child('userPools');
+        //     var userPoolsRef = new $firebaseArray(Ref);
+            
+        //     userPoolsRef.$loaded().then(function() {
+        //         console.log("");
+        //         userPoolsRef.$remove(keyQuitRecord).then(function(ref) {
+        //             console.log(ref.key() === keyQuitRecord.$id); // true
+        //         });
+        //     });
+        // }
+        
+        // findPoolByHash : function(hash) {
+        //     for(aUserPool in poolsInfoUserRecord) {
+        //         aUserPool.pool
+        //     }
+        // }
+        
     }
     
     return returnObj;

@@ -1,9 +1,15 @@
 <ion-view style="" title="Your Pool">
-    <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true">
+    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
         
         <label class="item item-icon-left">
             <i class="icon ion-star"></i>
-            Pool Number
+            Your Pools
+            <span class="badge badge-calm">{{howManyPoolsUserHas}}</span>
+        </label>
+        
+        <label class="item item-icon-left">
+            <i class="icon ion-person-stalker"></i>
+            Available Pools
             <span class="badge badge-calm">{{howManyPools}}</span>
         </label>
         
@@ -23,14 +29,26 @@
         </form>
 
         <form class="list">
+            <div class="item item-divider">Your Pools</div>
+            <div class="item item-icon-right" 
+            ng-repeat="(key, pool) in pools | filter : { poolees : { $ : { poolee : $rootScope.currentUser.regUser } } } : true">
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(key)"></button>
+                <span class="text">{{pool.name}}</span>
+            </div>
+        </form>
+
+        <form class="list">
             <div class="item item-divider">All Pools</div>
             <!--The following div has to be div rather than label, or joinPool() cannot be called successfully. -->
-            <div class="item item-icon-left item-icon-right" ng-repeat="(key, pool) in pools">
-                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(key)"></button>
+            <div class="item item-icon-right" 
+            ng-repeat="(key, pool) in pools">
+            <!-- Didn't manage to hide all joined pool. -->
                 <span class="text">{{pool.name}}</span>
                 <button class="button button-icon icon ion-checkmark-circled royal" ng-click="joinPool(key, false)"></button>
             </div>
         </form>
+
+        <div style="width: 300.25px; height: 30px;" class="spacer"></div>
         
     </ion-content>
 </ion-view>
