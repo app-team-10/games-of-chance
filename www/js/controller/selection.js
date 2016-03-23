@@ -120,4 +120,11 @@ angular.module('selection', ['app.services'])
             title: $scope.charityMessage,
         });
     };
+    
+    $scope.$on( "$ionicView.enter", function() {
+        if($rootScope.isRightAfterLogin == true) {
+            $scope.charityPrompt();
+            $rootScope.isRightAfterLogin = false;
+        }
+    });
 }])
