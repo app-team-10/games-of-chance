@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['registration', 'app.services', 'publicpool', 'publicpoolCheck', 'selection'])
+angular.module('app.controllers', ['probability', 'registration', 'app.services', 'publicpool', 'publicpoolCheck', 'selection'])
 // Just found out the order of dependency matters: app.service before registration will cause currentUser undefined.
 
 /**
@@ -45,10 +45,6 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool',
 })
    
 .controller('ultimatumGameCtrl', function($scope) {
-
-})
-   
-.controller('probabilityGameCtrl', function($scope) {
 
 })
    

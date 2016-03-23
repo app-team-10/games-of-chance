@@ -1,0 +1,13 @@
+<ion-view style="" title="Probability">
+    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
+        <h1>Choose an Option:</h1>
+        <div class="spacer" style="width: 300px; height: 74px;"></div>
+        <p>{{counter}}</p>
+        <p>{{initialPoints}}</p>
+        <p>{{probability.chancew}}% chance of winning {{probability.amount}} points </p>
+        <p>({{probability.chancel}}% of losing)</p>
+        <button id="letSPlay-button4" style="border-radius:0px 0px 0px 0px;" class="button button-positive  button-block" ng-click='check()'></button>
+        <div class="spacer" style="width: 300px; height: 75px;"></div>
+        <a id="letSPlay-button5" style="border-radius:0px 0px 0px 0px;" class="button button-positive  button-block" ng-click='plus()'>Sure Bet! (+1)</a>
+    </ion-content>
+</ion-view>
