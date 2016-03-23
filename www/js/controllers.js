@@ -5,7 +5,7 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool',
  * Very important: the dependencies and injections are in the same order!!
  * Or it will say some $ is NOT a function.
  */
-.controller('successCtrl', ['$scope', '$location', '$state', '$ionicHistory', '$timeout', function($scope, $location, $state, $ionicHistory, $timeout) {
+.controller('successCtrl', ['$scope', '$rootScope', '$location', '$state', '$ionicHistory', '$timeout', function($scope, $rootScope, $location, $state, $ionicHistory, $timeout) {
     /* 
     In order to go back to profile but clear history:
     $ionicHistory.clearHistory();
@@ -18,11 +18,18 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool',
     });
     $timeout(function() {
         $state.go('tabsController.profile');
+        
+        // var tabsController = $scope.tabsController;
+        // tabsController.select(4); 
+        
+        // The isRightAfterLogin is used to prompt user to donate.
+        $rootScope.isRightAfterLogin = true;
+        
         /*
         $location.path('/page1/tab1/page3');
         this is not a function ?? in ionic maybe.
         */
-    }, 2000);
+    }, 500);
 }])
   
 .controller('uCLGambleCtrl', function($scope) {

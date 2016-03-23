@@ -1,12 +1,30 @@
 <ion-view style="" title="Yours">
+    <ion-nav-buttons side="primary">
+      <button class="button button-clear button-icon icon ion-heart button-assertive" ng-click="charityPrompt()"></button>
+    </ion-nav-buttons>
     <ion-nav-buttons side="secondary">
-      <button class="button button-icon icon ion-clock" ng-click="estimateTime()"></button>
+      <button class="button button-clear button-icon icon ion-clock button-royal" ng-click="estimateTime()"></button>
     </ion-nav-buttons>
     <ion-content class="has-header" scroll="false" overflow-scroll="true" padding="true" style="background: url(img/YSSSK9IjRUyQjregTA2v_pokerByQin_bot_compressed.jpg) no-repeat center;" >
+    
         <div ng-hide="currentUser" style="text-align: center;">
             See your activities here after authentication.
         </div>
+        
+        
         <div ng-show="currentUser">
+            <label class="item item-icon-left" ng-show="currentUser.points">
+                <i class="icon ion-cash "></i>
+                Points
+                <span class="badge badge-calm">{{currentUser.points}}</span>
+            </label>
+            
+            <label class="item item-icon-left" ng-show="currentUser.donation">
+                <i class="icon ion-happy-outline"></i>
+                Donation
+                <span class="badge badge-calm">{{currentUser.donation}}</span>
+            </label>
+            
             <label class="item item-icon-left">
                 <i class="icon ion-star"></i>
                 Public Goods Pools
