@@ -1,5 +1,12 @@
 angular.module('publicpoolCheck', [])
 
+/**
+ * On 23/Mar/2016:
+ * Because of the index error caused by filter & ng-repeat, I changed the approach of finding pool in poolsInfo array. 
+ * However, I did not change the parameter name that these functions take.
+ * Beware a parameter named 'key' might actually be an object, if that function is called by ng-repeat with filter in HTML.
+ */
+
 .factory('PublicpoolCheck', ['$rootScope', '$firebaseAuth', '$firebaseArray', 'FIREBASE_URL', function($rootScope, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
 
     var ref = new Firebase(FIREBASE_URL);
@@ -61,14 +68,32 @@ angular.module('publicpoolCheck', [])
             }); // Note: Because 'then' gives the id stright away, the joinPool needs to change correspondingly.
         },
         
-        deletePool : function(key) {
-            poolsInfo.$remove(key);
+        // The keyDelete is an OBJECT !!
+        deletePool : function(keyDelete) {
+            returnObj.quitPool(keyDelete);
+            keyDelete = keyDelete.$id;
+            console.log("Deletion of " + keyDelete + "is called.");
+            // poolsInfo.$remove(keyDelete);
+            poolsInfo.$remove(poolsInfo.$indexFor(keyDelete));
         },
-                  
+        
+        // The keyJoin is an actual key given by HTML.
         joinPool : function(keyJoin, fund, isOwner) {
             if(isOwner === true) {
                 var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyJoin + '/poolees');
-            } else {
+                
+                // --------------- Owner Reg
+                var poolownerRef = new Firebase(FIREBASE_URL + 'pools/' + keyJoin + '/poolowner');
+                var poolowner = $firebaseArray(poolownerRef);
+                console.log("Becoming the owner.");
+                poolowner.$add({
+                    owner : $rootScope.currentUser.regUser
+                });
+            } 
+            else {
+                console.log("Wont become the owner.");
+                // --------------- Owner Reg
+                
                 keyJoin = poolsInfo.$keyAt(keyJoin);
                 console.log("The next line should be pool's id");
                 console.log("The pool id is" + keyJoin);
@@ -115,21 +140,9 @@ angular.module('publicpoolCheck', [])
                     // Action to share!
                 }
             });
-            
-            if(isOwner === true) {
-                var poolownerRef = new Firebase(FIREBASE_URL + 'pools/' + key + '/poolowner');
-                var poolowner = $firebaseArray(poolownerRef);
-                
-                console.log("Becoming the owner.");
-                
-                poolowner.$add({
-                    owner : $rootScope.currentUser.regUser
-                });
-            } else {
-                console.log("Wont become the owner.");
-            }
         },
         
+        // The keyJoinRecord parameter is an actual key given by joinPool.
         joinPoolInUserRecord : function(keyJoinRecord) {
             // Push generates hash code while update dont, so to avoid overwriting:
             var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).child('userPools').push({
@@ -137,8 +150,9 @@ angular.module('publicpoolCheck', [])
             });
         },
         
+        // The keyQuit parameter is an OBJECT passed by html.
         quitPool : function(keyQuit) {
-            var keyQuit = poolsInfo.$keyAt(keyQuit);
+            var keyQuit = keyQuit.$id;
             console.log("Pool's id is: " + keyQuit);
             var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyQuit + '/poolees');
             var poolees = $firebaseArray(pooleesRef);
@@ -161,6 +175,7 @@ angular.module('publicpoolCheck', [])
             });
         },
         
+        // The keyQuitRecord parameter is an actual key given by quitPool.
         quitPoolInUserRecord : function(keyQuitRecord) {
             var userPoolsRefObj = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser + '/userPools');
             var userPoolsRef = new $firebaseArray(userPoolsRefObj);
@@ -183,8 +198,14 @@ angular.module('publicpoolCheck', [])
                     }
                 }
             });
-        }
+        },
         
+        // testIndex : function(testIndexPara) {
+        //     console.log("testIndex() is called.");
+        //     console.log(testIndexPara);
+        //     var keyQuit = testIndexPara.$id;
+        //     console.log(keyQuit);
+        // }
     }
     
     return returnObj;

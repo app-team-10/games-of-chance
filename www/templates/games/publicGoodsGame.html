@@ -31,8 +31,17 @@
         <form class="list">
             <div class="item item-divider">Your Pools</div>
             <div class="item item-icon-right" 
-            ng-repeat="(key, pool) in pools | filter : { poolees : { $ : { poolee : $rootScope.currentUser.regUser } } } : true">
-                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(key)"></button>
+            ng-repeat="(key, pool) in pools | filter : { poolees : { $ : { poolee : currentUser.regUser } } } : true">
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(pool)"></button>
+                <span class="text">{{pool.name}}</span>
+            </div>
+        </form>
+        
+        <form class="list">
+            <div class="item item-divider">Your Own Pools</div>
+            <div class="item item-icon-right" 
+            ng-repeat="(key, pool) in pools | filter : { poolowner : { $ : { owner : currentUser.regUser } } } : true">
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="deletePool(pool)"></button>
                 <span class="text">{{pool.name}}</span>
             </div>
         </form>
