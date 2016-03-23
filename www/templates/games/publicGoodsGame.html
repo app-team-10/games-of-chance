@@ -1,0 +1,63 @@
+<ion-view style="" title="Your Pool">
+    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
+        
+        <label class="item item-icon-left">
+            <i class="icon ion-star"></i>
+            Your Pools
+            <span class="badge badge-calm">{{howManyPoolsUserHas}}</span>
+        </label>
+        
+        <label class="item item-icon-left">
+            <i class="icon ion-person-stalker"></i>
+            Available Pools
+            <span class="badge badge-calm">{{howManyPools}}</span>
+        </label>
+        
+        <div style="width: 300.25px; height: 16px;" class="spacer"></div>
+
+        <form class="list" name="newpoolform" ng-submit="addPool()" novalidate>
+            <div class="item item-divider">Start A New Pool</div>
+            <label style="" class="item item-input item-icon-right">
+                <span class="input-label">Name</span>
+                <input type="text" name="poolname" placeholder="Something Attractive" ng-model="poolProp.name" ng-required="true">
+                <button type="submit" class="button button-icon icon ion-plus-circled calm" ng-disabled="newpoolform.$invalid"></button>
+            </label>
+            <label style="" class="item item-input item-icon-right">
+                <span class="input-label">Fund</span>
+                <input type="number" min="1" name="fund" placeholder="Your Points to Invest" ng-model="poolProp.fund" ng-required="true">
+            </label>
+        </form>
+
+        <form class="list">
+            <div class="item item-divider">Your Pools</div>
+            <div class="item item-icon-right" 
+            ng-repeat="(key, pool) in pools | filter : { poolees : { $ : { poolee : currentUser.regUser } } } : true">
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(pool)"></button>
+                <span class="text">{{pool.name}}</span>
+            </div>
+        </form>
+        
+        <form class="list">
+            <div class="item item-divider">Your Own Pools</div>
+            <div class="item item-icon-right" 
+            ng-repeat="(key, pool) in pools | filter : { poolowner : { $ : { owner : currentUser.regUser } } } : true">
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="deletePool(pool)"></button>
+                <span class="text">{{pool.name}}</span>
+            </div>
+        </form>
+
+        <form class="list">
+            <div class="item item-divider">All Pools</div>
+            <!--The following div has to be div rather than label, or joinPool() cannot be called successfully. -->
+            <div class="item item-icon-right" 
+            ng-repeat="(key, pool) in pools">
+            <!-- Didn't manage to hide all joined pool. -->
+                <span class="text">{{pool.name}}</span>
+                <button class="button button-icon icon ion-checkmark-circled royal" ng-click="joinPool(key, false)"></button>
+            </div>
+        </form>
+
+        <div style="width: 300.25px; height: 30px;" class="spacer"></div>
+        
+    </ion-content>
+</ion-view>

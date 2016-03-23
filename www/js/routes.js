@@ -2,13 +2,7 @@ angular.module('app.routes', ['ionicUIRouter'])
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
   $stateProvider
-    
-  
 
   .state('tabsController.uCLGamble', {
     url: '/page2',
@@ -20,19 +14,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /* 
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.profile'
-      2) Using $state.go programatically:
-        $state.go('tabsController.profile');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page3
-      /page1/tab3/page3
-  */
   .state('tabsController.profile', {
     url: '/page3',
     views: {
@@ -43,6 +24,16 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab3': {
         templateUrl: 'templates/profile.html',
         controller: 'signupCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.selection', {
+    url: '/selection',
+    views: {
+      'tab4': {
+        templateUrl: 'templates/selection.html',
+        controller: 'selectionCtrl'
       }
     }
   })
@@ -114,6 +105,56 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
+  
+  .state('tabsController.publicGoods', {
+    url: '/publicGoods',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games_intro/publicGoods.html',
+        //controller: 'publicGoodsCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.publicGoodsGame', {
+    url: '/publicGoodsGame',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games/publicGoodsGame.html',
+        controller: 'publicGoodsCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } //current Auth
+        } //resolve
+      }
+    }
+  })
+  
+  .state('tabsController.timeEstimation', {
+    url: '/timeEstimation',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games_intro/timeEstimation.html',
+        //controller: 'timeEstimationCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.timeEstimationGame', {
+    url: '/timeEstimationGame',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games/timeEstimationGame.html',
+        controller: 'timeEstimationGameCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            }
+        }
+      }
+    }
+  })
 
   .state('tabsController.trustGame', {
     url: '/page7',
@@ -121,16 +162,6 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab2': {
         templateUrl: 'templates/trustGame.html',
         controller: 'trustGameCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.publicGoods', {
-    url: '/page8',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/publicGoods.html',
-        controller: 'publicGoodsCtrl'
       }
     }
   })
@@ -165,16 +196,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.timeEstimationGame', {
-    url: '/page12',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/timeEstimationGame.html',
-        controller: 'timeEstimationGameCtrl'
-      }
-    }
-  })
-
   .state('tabsController.rockGuessingGame', {
     url: '/page13',
     views: {
@@ -195,7 +216,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-$urlRouterProvider.otherwise('/page1/page2')
+    $urlRouterProvider.otherwise('/page1/page2')
 
   
 
