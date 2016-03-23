@@ -13,10 +13,16 @@
         
         
         <div ng-show="currentUser">
-            <label class="item item-icon-left">
+            <label class="item item-icon-left" ng-show="currentUser.points">
                 <i class="icon ion-cash "></i>
                 Points
                 <span class="badge badge-calm">{{currentUser.points}}</span>
+            </label>
+            
+            <label class="item item-icon-left" ng-show="currentUser.donation">
+                <i class="icon ion-happy-outline"></i>
+                Donation
+                <span class="badge badge-calm">{{currentUser.donation}}</span>
             </label>
             
             <label class="item item-icon-left">

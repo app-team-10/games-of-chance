@@ -91,10 +91,33 @@ angular.module('selection', ['app.services'])
     };
     
     $scope.donate = function (points) {
-        $scope.substractPoints(points);
-        var Ref = new Firebase(FIREBASE_URL + 'charity').push({
-            points : points
+        if($rootScope.currentUser.points < points) {
+            $scope.charityMessage = "Sorry, you own less points than that.";
+            $scope.showPointsAlert();
+        } else {
+            $scope.substractPoints(points);
+            var Ref = new Firebase(FIREBASE_URL + 'charity').push({
+                points : points
+            });
+            console.log(points + " points donated.");
+            // In order to improve the independency of code, instead of modification of user creation, I do this:
+            if(isNaN($rootScope.currentUser.donation)) {
+                var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).update({
+                    donation : points
+                });
+            } else {
+                var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).update({
+                    donation : ($rootScope.currentUser.donation + points)
+                });
+            }
+            $scope.charityMessage  = "Thank You!" ;
+            $scope.showPointsAlert();
+        }
+    };
+    
+    $scope.showPointsAlert = function() {
+        var alertPopup = $ionicPopup.alert({
+            title: $scope.charityMessage,
         });
-        console.log(points + " points donated.");
-    }
+    };
 }])
