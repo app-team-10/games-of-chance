@@ -35,8 +35,8 @@ angular.module('publicpoolCheck', [])
         poolsInfoUserRecord.$loaded().then(function(data) {
             $rootScope.howManyPoolsUserHas = poolsInfoUserRecord.length;
             console.log($rootScope.howManyPoolsUserHas);
-        }); //Make sure pool data is loaded
-
+        }); 
+        
         poolsInfoUserRecord.$watch(function(data) {
             $rootScope.howManyPoolsUserHas = poolsInfoUserRecord.length;
             console.log($rootScope.howManyPoolsUserHas);
@@ -154,28 +154,36 @@ angular.module('publicpoolCheck', [])
                         $rootScope.poolmessage = "You was inside.";
                         console.log($rootScope.poolmessage);
                         poolees.$remove(aPoolee);
+                        console.log("Calling user-record remover function with id: " + keyQuit);
+                        returnObj.quitPoolInUserRecord(keyQuit);
                     } 
                 } 
             });
         },
         
-        // quitPoolInUserRecord : function(keyQuitRecord) {
-        //     var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).child('userPools');
-        //     var userPoolsRef = new $firebaseArray(Ref);
-            
-        //     userPoolsRef.$loaded().then(function() {
-        //         console.log("");
-        //         userPoolsRef.$remove(keyQuitRecord).then(function(ref) {
-        //             console.log(ref.key() === keyQuitRecord.$id); // true
-        //         });
-        //     });
-        // }
-        
-        // findPoolByHash : function(hash) {
-        //     for(aUserPool in poolsInfoUserRecord) {
-        //         aUserPool.pool
-        //     }
-        // }
+        quitPoolInUserRecord : function(keyQuitRecord) {
+            var userPoolsRefObj = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser + '/userPools');
+            var userPoolsRef = new $firebaseArray(userPoolsRefObj);
+            console.log("User-record is: ");
+            console.log(userPoolsRef);
+            console.log("Called with id: " + keyQuitRecord);
+
+            userPoolsRef.$loaded().then(function() {
+                // for(aUserPoolIndex in userPoolsRef) {
+                // <<<<<<<<<< Last line won't work...
+                // >>>>>>>>>> Next 2 lines work fine...
+                var i = 0;
+                for(i = 0; i < userPoolsRef.length; i++) {
+                    var aUserPool = userPoolsRef.$getRecord(userPoolsRef.$keyAt(i));
+                    console.log(i + ' is ' + aUserPool);
+                    if(aUserPool.pool == keyQuitRecord) {
+                        console.log(aUserPool.pool)
+                        console.log("Removing " + aUserPool + " in user's record, which contains " + keyQuitRecord);
+                        userPoolsRef.$remove(aUserPool);
+                    }
+                }
+            });
+        }
         
     }
     
