@@ -1,6 +1,6 @@
 angular.module('registration', ['app.services'])
 
-.controller('signupCtrl', function($scope, Authentication) {
+.controller('signupCtrl', ['$scope', 'Authentication', function($scope, Authentication) {
 
     $scope.user = {};
     
@@ -17,4 +17,4 @@ angular.module('registration', ['app.services'])
     $scope.logout = function() {
         Authentication.logout();
     }; //logout
-})
+}])

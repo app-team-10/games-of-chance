@@ -1,10 +1,13 @@
-angular.module('app.controllers', ['registration', 'app.services', 'publicpool', 'publicpoolCheck', 'selection'])
+angular.module('app.controllers', ['probability', 'registration', 'app.services', 'publicpool', 'publicpoolCheck', 'selection'])
 // Just found out the order of dependency matters: app.service before registration will cause currentUser undefined.
 
 /**
  * Very important: the dependencies and injections are in the same order!!
  * Or it will say some $ is NOT a function.
  */
+
+//  <!-- If add any controller in HTML, the $scope within that element is tricky. -->
+
 .controller('successCtrl', ['$scope', '$rootScope', '$location', '$state', '$ionicHistory', '$timeout', function($scope, $rootScope, $location, $state, $ionicHistory, $timeout) {
     /* 
     In order to go back to profile but clear history:
@@ -45,10 +48,6 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool',
 })
    
 .controller('ultimatumGameCtrl', function($scope) {
-
-})
-   
-.controller('probabilityGameCtrl', function($scope) {
 
 })
    

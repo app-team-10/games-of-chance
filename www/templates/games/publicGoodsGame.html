@@ -30,10 +30,11 @@
 
         <form class="list">
             <div class="item item-divider">Your Pools</div>
-            <div class="item item-icon-right" 
+            <div class="item item-icon-left item-icon-right" 
             ng-repeat="(key, pool) in pools | filter : { poolees : { $ : { poolee : currentUser.regUser } } } : true">
-                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(pool)"></button>
+                <button class="button button-icon icon ion-information-circled energized" ng-click="showPool(pool)"></button>
                 <span class="text">{{pool.name}}</span>
+                <button class="button button-icon icon ion-minus-circled assertive" ng-click="quitPool(pool)"></button>
             </div>
         </form>
         

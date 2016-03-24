@@ -1,6 +1,6 @@
 angular.module('publicpool', ['app.services'])
 
-.controller('publicGoodsCtrl', function($scope, $ionicPopup, PublicpoolCheck) {
+.controller('publicGoodsCtrl', ['$scope', '$ionicPopup', 'PublicpoolCheck', function($scope, $ionicPopup, PublicpoolCheck) {
       
     $scope.poolProp = {};
     /**
@@ -57,4 +57,4 @@ angular.module('publicpool', ['app.services'])
     $scope.testIndex = function (params) {
         PublicpoolCheck.testIndex(params);
     }
-})
+}])
