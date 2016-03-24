@@ -1,11 +1,14 @@
-angular.module('app.controllers', ['registration', 'app.services', 'publicpool', 'publicpoolCheck', 'selection'])
+angular.module('app.controllers', ['probability', 'registration', 'app.services', 'publicpool', 'publicpoolCheck', 'selection'])
 // Just found out the order of dependency matters: app.service before registration will cause currentUser undefined.
 
 /**
  * Very important: the dependencies and injections are in the same order!!
  * Or it will say some $ is NOT a function.
  */
-.controller('successCtrl', ['$scope', '$location', '$state', '$ionicHistory', '$timeout', function($scope, $location, $state, $ionicHistory, $timeout) {
+
+//  <!-- If add any controller in HTML, the $scope within that element is tricky. -->
+
+.controller('successCtrl', ['$scope', '$rootScope', '$location', '$state', '$ionicHistory', '$timeout', function($scope, $rootScope, $location, $state, $ionicHistory, $timeout) {
     /* 
     In order to go back to profile but clear history:
     $ionicHistory.clearHistory();
@@ -18,11 +21,18 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool',
     });
     $timeout(function() {
         $state.go('tabsController.profile');
+        
+        // var tabsController = $scope.tabsController;
+        // tabsController.select(4); 
+        
+        // The isRightAfterLogin is used to prompt user to donate.
+        $rootScope.isRightAfterLogin = true;
+        
         /*
         $location.path('/page1/tab1/page3');
         this is not a function ?? in ionic maybe.
         */
-    }, 2000);
+    }, 500);
 }])
   
 .controller('uCLGambleCtrl', function($scope) {
@@ -38,10 +48,6 @@ angular.module('app.controllers', ['registration', 'app.services', 'publicpool',
 })
    
 .controller('ultimatumGameCtrl', function($scope) {
-
-})
-   
-.controller('probabilityGameCtrl', function($scope) {
 
 })
    

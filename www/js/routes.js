@@ -131,6 +131,31 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
   
+  .state('tabsController.probability', {
+    url: '/probability',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games_intro/probability.html',
+        // controller: 'probabilityCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.probabilityGame', {
+    url: '/probabilityGame',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games/probabilityGame.html',
+        controller: 'probabilityGameCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            }
+        }
+      }
+    }
+  })
+  
   .state('tabsController.timeEstimation', {
     url: '/timeEstimation',
     views: {
@@ -172,16 +197,6 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab2': {
         templateUrl: 'templates/ultimatumGame.html',
         controller: 'ultimatumGameCtrl'
-      }
-    }
-  })
-
-  .state('tabsController.probabilityGame', {
-    url: '/page10',
-    views: {
-      'tab2': {
-        templateUrl: 'templates/probabilityGame.html',
-        controller: 'probabilityGameCtrl'
       }
     }
   })
