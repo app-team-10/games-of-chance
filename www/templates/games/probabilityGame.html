@@ -1,4 +1,10 @@
 <ion-view style="" title="Probability">
+    <!-- If add any controller in HTML, the $scope within that element is tricky. -->
+    <ion-nav-bar>
+        <ion-nav-back-button class="button-clear" ng-click="probalilityQuit()">
+            <i class="ion-arrow-left-c"></i>Quit
+        </ion-nav-back-button>
+    </ion-nav-bar>
     <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
         <h1>Choose an Option:</h1>
         <div class="spacer" style="width: 300px; height: 74px;"></div>

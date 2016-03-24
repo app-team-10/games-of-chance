@@ -1,8 +1,12 @@
 angular.module('probability', ['app.services'])
 
-.controller('probabilityGameCtrl', ['$scope', '$ionicPopup', function($scope, $ionicPopup) {
+.controller('probabilityGameCtrl', ['$scope', '$rootScope', '$ionicPopup', '$ionicHistory', 'FIREBASE_URL',function($scope, $rootScope, $ionicPopup, $ionicHistory, FIREBASE_URL) {
     console.log("probabilityGameCtrl is working.");
     $scope.probability = {};
+    
+    $ionicHistory.nextViewOptions({
+        disableBack: true
+    });
     
     $scope.generatePercentage = function () {
         return 5 * (Math.floor(Math.random() * 19) + 1);
@@ -60,10 +64,34 @@ angular.module('probability', ['app.services'])
         $scope.probability.chancel = 100 - $scope.probability.chancew;
         $scope.counter--;   
         if($scope.counter == 0) {
-            var alertPopup = $ionicPopup.alert({
+            $scope.addPoints($scope.initialPoints);
+            var finishPopup = $ionicPopup.alert({
                 title: "Finished!",
                 subTitle: "Your won" + $scope.initialPoints + " points."
             });
+            $scope.initialPoints = -50;
+            $scope.counter = 10;
+            $ionicHistory.goBack();
+        }
+    }
+    
+    $scope.addPoints = function(x) {
+        var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).update({
+            points : $rootScope.currentUser.points + x
+        });
+    }
+    
+    $scope.probalilityQuit = function () {
+        console.log("probabilityQuit is called");
+        console.log($scope.counter + " counter value.");
+        if($scope.counter != 10) {
+            console.log("$scope.counter is not 10.");
+            var haveToFinishPopup = $ionicPopup.alert({
+                title: "Please Continue!",
+                subTitle: "You have already started this game."
+            });
+        } else {
+            $ionicHistory.goBack();
         }
     }
 }])
