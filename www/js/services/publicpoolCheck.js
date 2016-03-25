@@ -29,9 +29,40 @@ angular.module('publicpoolCheck', [])
         poolsInfo.$watch(function(data) {
             $rootScope.howManyPools = poolsInfo.length;
             console.log($rootScope.howManyPools);
+            
+            var i = 0, j = 0;
+            for(i = 0; i < poolsInfo.length; i++) {
+                // If the pool was created but no poolee..
+                if(typeof poolsInfo[i].poolees !== "undefined") {
+                    $rootScope.totalPoolFund = 0;
+                    console.log(poolsInfo[i].poolees);
+                    // To get size of object: 
+                    console.log("Number of members: ");
+                    console.log(Object.keys(poolsInfo[i].poolees).length);
+                    if(Object.keys(poolsInfo[i].poolees).length == 5) {
+                        for(var pooleetoadd in poolsInfo[i].poolees) {
+                            console.log("There is a fund: ");
+                            console.log(poolsInfo[i].poolees[pooleetoadd].fund)
+                            $rootScope.totalPoolFund += poolsInfo[i].poolees[pooleetoadd].fund;
+                        }
+                        console.log("The total fund is: ");
+                        console.log($rootScope.totalPoolFund);
+                        console.log("The shared fund is: ");
+                        console.log(Math.floor($rootScope.totalPoolFund / 5));
+                        for(var pooleetoshare in poolsInfo[i].poolees) {
+                            var pooleetoshareRef = new Firebase(FIREBASE_URL + 'pools/' + poolsInfo.$keyAt(i) + '/poolees').child(pooleetoshare).update({
+                                reward : (Math.floor($rootScope.totalPoolFund / 5))
+                            });
+                        }
+                        var pooleetosharepoolRef = new Firebase(FIREBASE_URL + 'pools/' + poolsInfo.$keyAt(i)).update({
+                            reward : (Math.floor($rootScope.totalPoolFund / 5))
+                        });
+                    }
+                }
+            }
         });
         
-        // For quiting:
+        // For quiting: 
         var poolsRefUserRecord = new Firebase(FIREBASE_URL + 'users/' + authUser.uid + '/userPools');
         // Here if use $rootScope.currentUser.regUser instead of authUser.uid, 0 pool is shown.
         poolsInfoUserRecord = new $firebaseArray(poolsRefUserRecord);
@@ -137,12 +168,17 @@ angular.module('publicpoolCheck', [])
                         returnObj.addPoints(-joinPool_fund);
                     }
                 }
-                
-                console.log("There are now still " + poolees.length + " poolees")
-                if(poolees.length = 4) {
-                    // Action to share!
-                }
             });
+            
+            /**
+             * The following is not a function... dont know why, try do it in onAuth().
+             */
+            // poolees.$watch().then(function() {
+            //     console.log("There are" + poolees.length + " poolees")
+            //     if(poolees.length = 5) {
+            //         // Action to share!
+            //     }
+            // });
         },
         
         // The keyJoinRecord parameter is an actual key given by joinPool.

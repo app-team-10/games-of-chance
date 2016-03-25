@@ -5,8 +5,15 @@
 
         <form class="list" ng-repeat="(key, member) in poolmemberstoshow">
             <div class="item item-divider">{{member.username}}</div>
-            <div class="item item-icon-right" ng-show="poolmemberstoshow.length == 2">
-                <span class="text">{{member.fund}}</span>
+            <div class="item item-icon-left" ng-show="poolmemberstoshow.length == 5">
+                <i class="icon ion-log-in"></i>
+                <span class="text">Investment</span>
+                <span class="badge badge-assertive">{{member.fund}}</span>
+            </div>
+            <div class="item item-icon-left" ng-show="poolmemberstoshow.length == 5">
+                <i class="icon ion-log-out"></i>
+                <span class="text">Reward</span>
+                <span class="badge badge-energized">{{member.reward}}</span>
             </div>
         </form>
 
