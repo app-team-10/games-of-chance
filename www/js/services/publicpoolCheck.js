@@ -87,7 +87,8 @@ angular.module('publicpoolCheck', [])
                 var poolowner = $firebaseArray(poolownerRef);
                 console.log("Becoming the owner.");
                 poolowner.$add({
-                    owner : $rootScope.currentUser.regUser
+                    owner : $rootScope.currentUser.regUser,
+                    username : $rootScope.currentUser.username
                 });
             } 
             else {
@@ -127,11 +128,13 @@ angular.module('publicpoolCheck', [])
                         // console.log(poolees);
                         poolees.$add({
                             poolee : $rootScope.currentUser.regUser,
+                            username : $rootScope.currentUser.username,
                             fund : joinPool_fund
                         }).then(function() {
                             console.log("Is a poolee. " + "There are now " + poolees.length + " poolees");
                             returnObj.joinPoolInUserRecord(keyJoin);
                         });
+                        returnObj.addPoints(-joinPool_fund);
                     }
                 }
                 
@@ -167,6 +170,7 @@ angular.module('publicpoolCheck', [])
                     if(aPoolee.poolee == $rootScope.currentUser.regUser) {
                         $rootScope.poolmessage = "You was inside.";
                         console.log($rootScope.poolmessage);
+                        returnObj.addPoints(aPoolee.fund);
                         poolees.$remove(aPoolee);
                         console.log("Calling user-record remover function with id: " + keyQuit);
                         returnObj.quitPoolInUserRecord(keyQuit);
@@ -213,6 +217,12 @@ angular.module('publicpoolCheck', [])
             var poolees = $firebaseArray(pooleesRef);
             $rootScope.poolmemberstoshow = poolees;
             $state.go('tabsController.publicGoodsMembers');
+        },
+        
+        addPoints : function(x) {
+            var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).update({
+                points : $rootScope.currentUser.points + x
+            });
         }
     }
     

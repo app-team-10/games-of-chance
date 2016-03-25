@@ -3,8 +3,9 @@
         
         <div style="width: 300.25px; height: 16px;" class="spacer"></div>
 
-        <form class="list">
-            <div class="item item-icon-right" ng-repeat="(key, member) in poolmemberstoshow">
+        <form class="list" ng-repeat="(key, member) in poolmemberstoshow">
+            <div class="item item-divider">{{member.username}}</div>
+            <div class="item item-icon-right" ng-show="poolmemberstoshow.length == 2">
                 <span class="text">{{member.fund}}</span>
             </div>
         </form>
