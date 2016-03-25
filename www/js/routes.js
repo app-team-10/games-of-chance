@@ -3,7 +3,8 @@ angular.module('app.routes', ['ionicUIRouter'])
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
-
+  
+  //------------------------------------ Basics --------------------------------------
   .state('tabsController.uCLGamble', {
     url: '/page2',
     views: {
@@ -44,6 +45,16 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab3': {
         templateUrl: 'templates/setting.html',
         controller: 'settingCtrl'
+      }
+    }
+  })
+  
+  .state('tabsController.aboutUs', {
+    url: '/page14',
+    views: {
+      'tab3': {
+        templateUrl: 'templates/aboutUs.html',
+        controller: 'aboutUsCtrl'
       }
     }
   })
@@ -105,7 +116,8 @@ angular.module('app.routes', ['ionicUIRouter'])
       }
     }
   })
-  
+
+  //------------------------------------ Games --------------------------------------
   .state('tabsController.publicGoods', {
     url: '/publicGoods',
     views: {
@@ -122,6 +134,21 @@ angular.module('app.routes', ['ionicUIRouter'])
       'tab2': {
         templateUrl: 'templates/games/publicGoodsGame.html',
         controller: 'publicGoodsCtrl',
+        resolve: {
+            currentAuth: function(Authentication) {
+                return Authentication.requireAuth();
+            } //current Auth
+        } //resolve
+      }
+    }
+  })
+  
+.state('tabsController.publicGoodsMembers', {
+    url: '/publicGoodsMembers',
+    views: {
+      'tab2': {
+        templateUrl: 'templates/games/publicGoodsMembers.html',
+        controller: 'publicGoodsMembersCtrl',
         resolve: {
             currentAuth: function(Authentication) {
                 return Authentication.requireAuth();
@@ -221,15 +248,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  .state('tabsController.aboutUs', {
-    url: '/page14',
-    views: {
-      'tab3': {
-        templateUrl: 'templates/aboutUs.html',
-        controller: 'aboutUsCtrl'
-      }
-    }
-  })
+
 
     $urlRouterProvider.otherwise('/page1/page2')
 

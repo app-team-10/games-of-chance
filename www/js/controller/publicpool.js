@@ -57,4 +57,17 @@ angular.module('publicpool', ['app.services'])
     $scope.testIndex = function (params) {
         PublicpoolCheck.testIndex(params);
     }
+    
+    $scope.showPool = function (key) {
+        PublicpoolCheck.showPool(key);
+    }
+    /**
+     * After testing with following code : click icon button on a item button will trigger both.
+     */
+    // $scope.testItemLink = function () {
+    //     console.log("Click icon buttons will trigger the item button.");
+    // }
+    // $scope.showPool = function (thig) {
+    //     console.log("Click icon buttons will NOT trigger the item button.");
+    // }
 }])

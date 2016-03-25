@@ -1,0 +1,15 @@
+<ion-view style="" title="Pool Members">
+    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
+        
+        <div style="width: 300.25px; height: 16px;" class="spacer"></div>
+
+        <form class="list">
+            <div class="item item-icon-right" ng-repeat="(key, member) in poolmemberstoshow">
+                <span class="text">{{member.fund}}</span>
+            </div>
+        </form>
+
+        <div style="width: 300.25px; height: 30px;" class="spacer"></div>
+        
+    </ion-content>
+</ion-view>

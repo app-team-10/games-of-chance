@@ -7,7 +7,7 @@ angular.module('publicpoolCheck', [])
  * Beware a parameter named 'key' might actually be an object, if that function is called by ng-repeat with filter in HTML.
  */
 
-.factory('PublicpoolCheck', ['$rootScope', '$firebaseAuth', '$firebaseArray', 'FIREBASE_URL', function($rootScope, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
+.factory('PublicpoolCheck', ['$rootScope', '$state', '$firebaseAuth', '$firebaseArray', 'FIREBASE_URL', function($rootScope, $state, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
 
     var ref = new Firebase(FIREBASE_URL);
     var auth = $firebaseAuth(ref);
@@ -206,6 +206,14 @@ angular.module('publicpoolCheck', [])
         //     var keyQuit = testIndexPara.$id;
         //     console.log(keyQuit);
         // }
+        
+        showPool : function(keyShow) {
+            var keyShow = keyShow.$id;
+            var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyShow + '/poolees');
+            var poolees = $firebaseArray(pooleesRef);
+            $rootScope.poolmemberstoshow = poolees;
+            $state.go('tabsController.publicGoodsMembers');
+        }
     }
     
     return returnObj;
