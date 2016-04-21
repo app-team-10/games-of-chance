@@ -148,7 +148,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab2': {
         templateUrl: 'templates/games/publicGoodsMembers.html',
-        controller: 'publicGoodsMembersCtrl',
+        controller: 'publicGoodsCtrl',
         resolve: {
             currentAuth: function(Authentication) {
                 return Authentication.requireAuth();

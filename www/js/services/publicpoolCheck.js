@@ -249,15 +249,35 @@ angular.module('publicpoolCheck', [])
         
         showPool : function(keyShow) {
             var keyShow = keyShow.$id;
+            $rootScope.pooltoshow = keyShow;
             var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyShow + '/poolees');
-            var poolees = $firebaseArray(pooleesRef);
-            $rootScope.poolmemberstoshow = poolees;
+            var pooleesInfo = $firebaseArray(pooleesRef);
+            $rootScope.poolmemberstoshow = pooleesInfo; // Also used in punish()
             $state.go('tabsController.publicGoodsMembers');
         },
         
         addPoints : function(x) {
             var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).update({
                 points : $rootScope.currentUser.points + x
+            });
+        },
+        
+        punish : function(keyPunish) {
+            returnObj.addPoints(-1);
+            keyPunish = $rootScope.poolmemberstoshow.$keyAt(keyPunish);
+            console.log($rootScope.pooltoshow);
+            var punishRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow + '/poolees/' + keyPunish);
+            var punishInfo = $firebaseArray(punishRef);
+            // If not loaded, object is ok but each record is null.
+            punishInfo.$loaded().then(function (data) {
+                if (punishInfo.$getRecord("punishment") == null) {
+                    punishmentValue = 0;
+                } else {
+                    punishmentValue = punishInfo.$getRecord("punishment").$value;
+                }
+                punishRef.update({
+                    punishment: punishmentValue + 10
+                });
             });
         }
     }

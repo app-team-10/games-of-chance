@@ -15,6 +15,15 @@
                 <span class="text">Reward</span>
                 <span class="badge badge-energized">{{member.reward}}</span>
             </div>
+            <div class="item item-icon-left" ng-show="member.punishment">
+                <i class="icon ion-sad-outline"></i>
+                <span class="text">Punishment</span>
+                <span class="badge badge-dark">{{member.punishment}}</span>
+            </div>
+            <div class="item item-icon-right" ng-show="poolmemberstoshow.length == 5">
+                <span class="text">Punish this player</span>
+                <button class="button button-icon icon ion-alert-circled energized" ng-click="punish(key)"></button>
+            </div>
         </form>
 
         <div style="width: 300.25px; height: 30px;" class="spacer"></div>
