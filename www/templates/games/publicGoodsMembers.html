@@ -1,0 +1,34 @@
+<ion-view style="" title="Pool Members">
+    <ion-content class="has-header" scroll="true" overflow-scroll="true" padding="true">
+        
+        <div style="width: 300.25px; height: 16px;" class="spacer"></div>
+        <button class="button button-block button-positive" ng-click="confirm()">Confirm</button>
+        <p style="text-align: center;">Notice: After clicking this button, you risk that you cannot futher punish another player if everyone has confirmed.</p>
+        <div style="width: 300.25px; height: 16px;" class="spacer"></div>
+        <form class="list" ng-repeat="(key, member) in poolmemberstoshow">
+            <div class="item item-divider">{{member.username}}</div>
+            <div class="item item-icon-left" ng-show="poolmemberstoshow.length == 5">
+                <i class="icon ion-log-in"></i>
+                <span class="text">Investment</span>
+                <span class="badge badge-assertive">{{member.fund}}</span>
+            </div>
+            <div class="item item-icon-left" ng-show="poolmemberstoshow.length == 5">
+                <i class="icon ion-log-out"></i>
+                <span class="text">Reward</span>
+                <span class="badge badge-energized">{{member.reward}}</span>
+            </div>
+            <div class="item item-icon-left" ng-show="member.punishment">
+                <i class="icon ion-sad-outline"></i>
+                <span class="text">Punishment</span>
+                <span class="badge badge-dark">{{member.punishment}}</span>
+            </div>
+            <div class="item item-icon-right" ng-show="poolmemberstoshow.length == 5">
+                <span class="text">Punish this player</span>
+                <button class="button button-icon icon ion-alert-circled energized" ng-click="punish(key)"></button>
+            </div>
+        </form>
+
+        <div style="width: 300.25px; height: 30px;" class="spacer"></div>
+        
+    </ion-content>
+</ion-view>

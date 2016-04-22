@@ -1,6 +1,6 @@
 angular.module('publicpool', ['app.services'])
 
-.controller('publicGoodsCtrl', ['$scope', '$ionicPopup', 'PublicpoolCheck', function($scope, $ionicPopup, PublicpoolCheck) {
+.controller('publicGoodsCtrl', ['$scope', '$rootScope', '$ionicPopup', 'PublicpoolCheck', function($scope, $rootScope, $ionicPopup, PublicpoolCheck) {
       
     $scope.poolProp = {};
     /**
@@ -56,5 +56,33 @@ angular.module('publicpool', ['app.services'])
     
     $scope.testIndex = function (params) {
         PublicpoolCheck.testIndex(params);
+    };
+    
+    $scope.showPool = function (key) {
+        PublicpoolCheck.showPool(key);
+    };
+    /**
+     * After testing with following code : click icon button on a item button will trigger both.
+     */
+    // $scope.testItemLink = function () {
+    //     console.log("Click icon buttons will trigger the item button.");
+    // }Í
+    // $scope.showPool = function (thig) {
+    //     console.log("Click icon buttons will NOT trigger the item button.");
+    // }
+    
+    $scope.punish = function (key) {
+        if ($rootScope.currentUser.points > 0) {
+            PublicpoolCheck.punish(key);
+        } else {
+            var alertPopup = $ionicPopup.alert({
+                title: 'No Enough Points!',
+                template: 'Go top-up or play some free games to gain points.'
+            });
+        }
+    };
+    
+    $scope.confirm = function () {
+        PublicpoolCheck.confirm();
     }
 }])
