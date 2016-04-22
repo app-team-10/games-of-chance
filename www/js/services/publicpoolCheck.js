@@ -7,7 +7,7 @@ angular.module('publicpoolCheck', [])
  * Beware a parameter named 'key' might actually be an object, if that function is called by ng-repeat with filter in HTML.
  */
 
-.factory('PublicpoolCheck', ['$rootScope', '$state', '$firebaseAuth', '$firebaseArray', 'FIREBASE_URL', function($rootScope, $state, $firebaseAuth, $firebaseArray, FIREBASE_URL) {
+.factory('PublicpoolCheck', ['$rootScope', '$state', '$firebaseAuth', '$firebaseArray', "$firebaseObject", 'FIREBASE_URL', function($rootScope, $state, $firebaseAuth, $firebaseArray, $firebaseObject, FIREBASE_URL) {
 
     var ref = new Firebase(FIREBASE_URL);
     var auth = $firebaseAuth(ref);
@@ -28,34 +28,36 @@ angular.module('publicpoolCheck', [])
 
         poolsInfo.$watch(function(data) {
             $rootScope.howManyPools = poolsInfo.length;
-            console.log($rootScope.howManyPools);
+            //console.log($rootScope.howManyPools);
             
             var i = 0, j = 0;
             for(i = 0; i < poolsInfo.length; i++) {
                 // If the pool was created but no poolee..
                 if(typeof poolsInfo[i].poolees !== "undefined") {
                     $rootScope.totalPoolFund = 0;
-                    console.log(poolsInfo[i].poolees);
+                    // console.log(poolsInfo[i].poolees);
                     // To get size of object: 
-                    console.log("Number of members: ");
-                    console.log(Object.keys(poolsInfo[i].poolees).length);
+                    // console.log("Number of members: ");
+                    // console.log(Object.keys(poolsInfo[i].poolees).length);
+                    
+                    // When there are 5 poolees in a pool:
                     if(Object.keys(poolsInfo[i].poolees).length == 5) {
                         for(var pooleetoadd in poolsInfo[i].poolees) {
-                            console.log("There is a fund: ");
-                            console.log(poolsInfo[i].poolees[pooleetoadd].fund)
+                            //console.log("There is a fund: ");
+                            //console.log(poolsInfo[i].poolees[pooleetoadd].fund)
                             $rootScope.totalPoolFund += poolsInfo[i].poolees[pooleetoadd].fund;
                         }
-                        console.log("The total fund is: ");
-                        console.log($rootScope.totalPoolFund);
-                        console.log("The shared fund is: ");
-                        console.log(Math.floor($rootScope.totalPoolFund / 5));
+                        // console.log("The total fund is: ");
+                        // console.log($rootScope.totalPoolFund);
+                        // console.log("The shared fund is: ");
+                        // console.log(Math.floor($rootScope.totalPoolFund / 5));
                         for(var pooleetoshare in poolsInfo[i].poolees) {
                             var pooleetoshareRef = new Firebase(FIREBASE_URL + 'pools/' + poolsInfo.$keyAt(i) + '/poolees').child(pooleetoshare).update({
-                                reward : (Math.floor($rootScope.totalPoolFund / 5))
+                                reward: (Math.floor($rootScope.totalPoolFund / 5))
                             });
                         }
                         var pooleetosharepoolRef = new Firebase(FIREBASE_URL + 'pools/' + poolsInfo.$keyAt(i)).update({
-                            reward : (Math.floor($rootScope.totalPoolFund / 5))
+                            reward: (Math.floor($rootScope.totalPoolFund / 5))
                         });
                     }
                 }
@@ -252,7 +254,7 @@ angular.module('publicpoolCheck', [])
             $rootScope.pooltoshow = keyShow;
             var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + keyShow + '/poolees');
             var pooleesInfo = $firebaseArray(pooleesRef);
-            $rootScope.poolmemberstoshow = pooleesInfo; // Also used in punish()
+            $rootScope.poolmemberstoshow = pooleesInfo; // Also used in punish() and confirm().
             $state.go('tabsController.publicGoodsMembers');
         },
         
@@ -263,24 +265,214 @@ angular.module('publicpoolCheck', [])
         },
         
         punish : function(keyPunish) {
-            returnObj.addPoints(-1);
-            keyPunish = $rootScope.poolmemberstoshow.$keyAt(keyPunish);
-            console.log($rootScope.pooltoshow);
-            var punishRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow + '/poolees/' + keyPunish);
-            var punishInfo = $firebaseArray(punishRef);
-            // If not loaded, object is ok but each record is null.
-            punishInfo.$loaded().then(function (data) {
-                if (punishInfo.$getRecord("punishment") == null) {
-                    punishmentValue = 0;
-                } else {
-                    punishmentValue = punishInfo.$getRecord("punishment").$value;
-                }
-                punishRef.update({
-                    punishment: punishmentValue + 10
+            if ($rootScope.currentUser.points > 0) {
+                returnObj.addPoints(-1);
+                keyPunish = $rootScope.poolmemberstoshow.$keyAt(keyPunish);
+                console.log($rootScope.pooltoshow);
+                var punishRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow + '/poolees/' + keyPunish);
+                var punishInfo = $firebaseArray(punishRef);
+                // If not loaded, object is ok but each record is null.
+                punishInfo.$loaded().then(function (data) {
+                    if (punishInfo.$getRecord("punishment") == null) {
+                        punishmentValue = 0;
+                    } else {
+                        punishmentValue = punishInfo.$getRecord("punishment").$value;
+                    }
+                    punishRef.update({
+                        punishment : punishmentValue + 10
+                    });
                 });
+            }
+        },
+        
+        // notEnoughPoints: function () {
+        //     var alertPopup = $ionicPopup.alert({
+        //         title: 'No Enough Points!',
+        //         template: 'Go top-up or play some free games to gain points.'
+        //     });
+        // }
+        // THIS WONT SHOW UP.
+
+        confirm: function () {
+            console.log("confirm called");
+            // Quit this pool in user record:
+            returnObj.quitPoolInUserRecord($rootScope.pooltoshow);
+            
+            // Find poolee in pool:
+            var pooleesRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow + '/poolees');
+            var poolees = $firebaseArray(pooleesRef);
+            poolees.$loaded().then(function () {
+                console.log("poolees loaded");
+                var i = 0;
+                for (i = 0; i < poolees.length; i++) {
+                    var aPoolee = poolees.$getRecord(poolees.$keyAt(i));
+                    if (aPoolee.poolee == $rootScope.currentUser.regUser) {
+                        $rootScope.confirmKey = poolees.$keyAt(i);
+                        console.log("poolee found");
+                    }
+                }
+                
+                // Check if he/she has confirmed (nested to wait "confirmKey" value.)
+                var confirmRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow + '/poolees/' + $rootScope.confirmKey);
+                var confirmInfo = $firebaseArray(confirmRef);
+                confirmInfo.$loaded().then(function () {
+                    console.log("the poolee loaded");
+                    if (confirmInfo.$getRecord("confirm") == null) {
+                        confirmRef.update({
+                            confirm: 1
+                        });
+                        var poolConfirmRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow);
+                        var poolConfirmInfo = $firebaseArray(poolConfirmRef);
+                        poolConfirmInfo.$loaded().then(function () {
+                            console.log("the confirms leaded");
+                            if (poolConfirmInfo.$getRecord("confirms") == null) {
+                                confirmsValue = 0;
+                            } else {
+                                confirmsValue = poolConfirmInfo.$getRecord("confirms").$value;
+                            }
+                            poolConfirmRef.update({
+                                confirms: confirmsValue + 1
+                            });
+
+                            // Check if everyone is happy:
+                            if (poolConfirmInfo.$getRecord("confirms").$value == 5) {
+                                $rootScope.totalfund = 0;
+                                for (var pooleetoadd in poolees) {
+                                    if (pooleetoadd.indexOf('$') != 0) {
+                                        console.log(pooleetoadd);
+                                        console.log(poolees[pooleetoadd].fund);
+                                        $rootScope.totalfund += poolees[pooleetoadd].fund;
+                                    }
+                                }
+                                console.log("totalfund : " + $rootScope.totalfund);
+                                
+                                // for (var j = 0; j < 5; j++) {
+                                // // for (var pooleetoshare in poolees) {
+                                //     // I know there are exactly 5 people so 0-4. No need to ignore $___.
+                                //     // if (pooleetoshare.indexOf('$') != 0) {
+                                //         console.log(j);
+                                //         if (isNaN(poolees[j].punishment)) {
+                                //             $rootScope.thispunish = 0;
+                                //         } else {
+                                //             $rootScope.thispunish = poolees[j].punishment;
+                                //         }
+                                //         console.log("(Math.floor($rootScope.totalfund / 5)) : " + (Math.floor($rootScope.totalfund / 5)));
+                                //         console.log("$rootScope.thispunish : " + $rootScope.thispunish);
+                                //         var usertoaddpointsRef = new Firebase(FIREBASE_URL + 'users/' + poolees[j].poolee);
+                                //         var usertoaddpointsInfo = $firebaseArray(usertoaddpointsRef);
+                                //         usertoaddpointsInfo.$loaded().then(function () {
+                                //             console.log("usertoaddpointsInfo.$getRecord(\"points\").$value : " + usertoaddpointsInfo.$getRecord("points").$value);
+                                //             console.log(usertoaddpointsInfo.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - $rootScope.thispunish);
+                                //             usertoaddpointsRef.update({
+                                //                 points: (usertoaddpointsInfo.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - $rootScope.thispunish)
+                                //             });
+                                //             usertoaddpointsInfo.$destroy();
+                                //         })
+                                //     // }
+                                // }
+
+                                for (var j = 0; j < 5; j++) {
+                                    if (isNaN(poolees[j].punishment)) {
+                                        poolees[j].punishment = 0;
+                                    }
+                                    console.log("(Math.floor($rootScope.totalfund / 5)) : " + (Math.floor($rootScope.totalfund / 5)));
+                                    console.log("poolees[j].punishment : " + poolees[j].punishment);
+                                }
+
+                                var j0Ref = new Firebase(FIREBASE_URL + 'users/' + poolees[0].poolee);
+                                var j0Info = $firebaseArray(j0Ref);
+                                j0Info.$loaded().then(function () {
+                                    j0Ref.update({
+                                        points: (j0Info.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - poolees[0].punishment)
+                                    });
+                                    var j1Ref = new Firebase(FIREBASE_URL + 'users/' + poolees[1].poolee);
+                                    var j1Info = $firebaseArray(j1Ref);
+                                    j1Info.$loaded().then(function () {
+                                        j1Ref.update({
+                                            points: (j1Info.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - poolees[1].punishment)
+                                        });
+                                        var j2Ref = new Firebase(FIREBASE_URL + 'users/' + poolees[2].poolee);
+                                        var j2Info = $firebaseArray(j2Ref);
+                                        j2Info.$loaded().then(function () {
+                                            j2Ref.update({
+                                                points: (j2Info.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - poolees[2].punishment)
+                                            });
+                                            var j3Ref = new Firebase(FIREBASE_URL + 'users/' + poolees[3].poolee);
+                                            var j3Info = $firebaseArray(j3Ref);
+                                            j3Info.$loaded().then(function () {
+                                                j3Ref.update({
+                                                    points: (j3Info.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - poolees[3].punishment)
+                                                });
+                                                var j4Ref = new Firebase(FIREBASE_URL + 'users/' + poolees[4].poolee);
+                                                var j4Info = $firebaseArray(j4Ref);
+                                                j4Info.$loaded().then(function () {
+                                                    j4Ref.update({
+                                                        points: (j4Info.$getRecord("points").$value + (Math.floor($rootScope.totalfund / 5)) - poolees[4].punishment)
+                                                    });
+                                                    // Remove the pool so everything is done.
+                                                    var removeRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow);
+                                                    var removeObj = $firebaseObject(removeRef);
+                                                    removeObj.$remove().then(function(ref) {}, function(error) {});
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        },
+        
+        ifAllConfirmed: function () {
+            //console.log("isAllConfirmed called");
+            var confirmAllRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow);
+            var confirmAllInfo = $firebaseArray(confirmAllRef);
+            confirmAllInfo.$loaded().then(function () {
+                //console.log("pool loaded");
+                //console.log(confirmAllInfo.$getRecord("confirms"));
+                if (confirmAllInfo.$getRecord("confirms").$value == 5) {
+                    //console.log("if condition satisfied");
+                    var poolshowingRef = new Firebase(FIREBASE_URL + 'pools/' + $rootScope.pooltoshow + "/poolees");
+                    var poolshowingInfo = $firebaseArray(poolshowingRef);
+                    poolshowingInfo.$loaded().then(function (data) {
+                        //console.log("pools loaded");
+                        //$rootScope.totalfund = 0;
+                        holderInt = 0;
+                        for (var pooleetoadd in poolshowingInfo) {
+                            console.log(pooleetoadd);
+                            console.log(poolshowingInfo[pooleetoadd].fund);
+                            holderInt += poolshowingInfo[pooleetoadd].fund;
+                            //console.log("totalfund : " + $rootScope.totalfund);
+                        }
+                        console.log("totalfund : " + $rootScope.totalfund);
+                        //console.log("updating points");
+                        for (var pooleetoshare in poolshowingInfo) {
+                            if (isNaN(poolshowingInfo[pooleetoshare].punishment)) {
+                                $rootScope.thispunish = 0;
+                            } else {
+                                $rootScope.thispunish = poolshowingInfo[pooleetoshare].punishment;
+
+                            }
+                            console.log("poolshowingInfo[pooleetoshare].punishment : " + poolshowingInfo[pooleetoshare].punishment);
+                            console.log("(Math.floor(holderInt / 5)) : " + (Math.floor(holderInt / 5)));
+                            console.log("$rootScope.thispunish" + $rootScope.thispunish);
+                            var usertoaddpointsRef = new Firebase(FIREBASE_URL + 'users/' + poolshowingInfo[pooleetoshare].poolee);
+                            var usertoaddpointsInfo = $firebaseArray(usertoaddpointsRef);
+                            usertoaddpointsInfo.$loaded().then(function () {
+                                console.log("usertoaddpointsInfo.$getRecord(\"points\").$value : " + usertoaddpointsInfo.$getRecord("points").$value);
+                                console.log(usertoaddpointsInfo.$getRecord("points").$value + (Math.floor(holderInt / 5)) - $rootScope.thispunish);
+                                usertoaddpointsRef.update({
+                                    points: (usertoaddpointsInfo.$getRecord("points").$value + (Math.floor(holderInt / 5)) - $rootScope.thispunish)
+                                });
+                            })
+                        }
+                    });
+                }
             });
         }
     }
-    
+
     return returnObj;
 }])
