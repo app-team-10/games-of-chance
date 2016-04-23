@@ -212,7 +212,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/page7',
     views: {
       'tab2': {
-        templateUrl: 'templates/trustGame.html',
+        templateUrl: 'templates/games_intro/trustGame.html',
         controller: 'trustGameCtrl'
       }
     }
@@ -222,7 +222,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/page9',
     views: {
       'tab2': {
-        templateUrl: 'templates/ultimatumGame.html',
+        templateUrl: 'templates/games_intro/ultimatumGame.html',
         controller: 'ultimatumGameCtrl'
       }
     }
@@ -232,7 +232,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/page11',
     views: {
       'tab2': {
-        templateUrl: 'templates/beautyContestGame.html',
+        templateUrl: 'templates/games_intro/beautyContestGame.html',
         controller: 'beautyContestGameCtrl'
       }
     }
@@ -242,7 +242,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/page13',
     views: {
       'tab2': {
-        templateUrl: 'templates/rockGuessingGame.html',
+        templateUrl: 'templates/games_intro/rockGuessingGame.html',
         controller: 'rockGuessingGameCtrl'
       }
     }

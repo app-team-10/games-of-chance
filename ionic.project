@@ -1,4 +1,12 @@
 {
   "name": "comp103pDraft1_Qin",
-  "app_id": "118d55aa"
+  "app_id": "118d55aa",
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*"
+  ]
 }
