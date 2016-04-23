@@ -15,9 +15,60 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+$stable:                          #fff !default;
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+
+@font-face {
+    font-family: italiana;
+    src: url(../font/Italiana-Regular.ttf);
+}
+
+body {
+    font-family: italiana;
+}
+
+$qinRadius: 10px;
+$qinBorder: 1px;
+$qinBordercolor: #f8f8f8;
+
+h1 {
+    font-family: italiana;
+}
+
+h2 {
+    font-family: italiana;
+}
+
+img {
+    border-radius: $qinRadius;
+}
+
+.button {
+    font-family: italiana;
+    text-transform: uppercase;
+    border-radius: $qinRadius;
+    border: none;
+}
+
+.item {
+    border-top-style: none;
+    border-right-style: solid;
+    border-bottom-style: none;
+    border-left-style: solid;
+    border-width: $qinBorder;
+    border-color: $qinBordercolor;
+}
+.item:first-child {
+    border-radius: $qinRadius $qinRadius 0 0;
+    border-top-style: solid;
+}
+.item:last-child {
+    border-radius: 0 0 $qinRadius $qinRadius;
+    border-bottom-style: solid;
+}
