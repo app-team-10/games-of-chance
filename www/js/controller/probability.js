@@ -40,15 +40,23 @@ angular.module('probability', ['app.services'])
     console.log($scope.probability.amount);
     $scope.initialPoints = -50;
     
-    $scope.check = function() {
+    $scope.check = function () {
         console.log("check() is called.");
         var ifItsWinning = $scope.randomWithProbability($scope.probability.chancew);
-        if(ifItsWinning==1) {
+        if (ifItsWinning == 1) {
             $scope.initialPoints += $scope.probability.amount;
-            alert("you won "+ $scope.probability.amount +" points");
-        } else if(ifItsWinning==0) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Won',
+                template: "you won " + $scope.probability.amount + " points"
+            });
+            alertPopup();
+        } else if (ifItsWinning == 0) {
             $scope.initialPoints -= $scope.probability.amount;
-            alert("you lost "+ $scope.probability.amount +" points");
+            var alertPopup = $ionicPopup.alert({
+                title: 'Lost',
+                template: "you lost " + $scope.probability.amount + " points"
+            });
+            alertPopup();
         }
         $scope.reset();
     };
