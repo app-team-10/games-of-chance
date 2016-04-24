@@ -10,10 +10,10 @@ angular.module('probability', ['app.services'])
     
     $scope.generatePercentage = function () {
         return 5 * (Math.floor(Math.random() * 19) + 1);
-    }
+    };
     $scope.generatePoints = function () {
         return 10 * (Math.floor(Math.random() * 10) + 1);
-    }
+    };
     
     // This function is given a percentage and according to that randomly determine if winning.
     $scope.randomWithProbability = function (a) {
@@ -30,7 +30,7 @@ angular.module('probability', ['app.services'])
         var idx = Math.floor(Math.random() * notRandomNumbers.length);
         return notRandomNumbers[idx];
         // returning 1 or 0.
-    }
+    };
     
     $scope.counter = 10;
     $scope.probability.chancew = $scope.generatePercentage();
@@ -49,14 +49,12 @@ angular.module('probability', ['app.services'])
                 title: 'Won',
                 template: "you won " + $scope.probability.amount + " points"
             });
-            alertPopup();
         } else if (ifItsWinning == 0) {
             $scope.initialPoints -= $scope.probability.amount;
             var alertPopup = $ionicPopup.alert({
                 title: 'Lost',
                 template: "you lost " + $scope.probability.amount + " points"
             });
-            alertPopup();
         }
         $scope.reset();
     };
@@ -70,7 +68,7 @@ angular.module('probability', ['app.services'])
         $scope.probability.amount = $scope.generatePoints();
         $scope.probability.chancew = $scope.generatePercentage();
         $scope.probability.chancel = 100 - $scope.probability.chancew;
-        $scope.counter--;   
+        $scope.counter = $scope.counter - 1;
         if($scope.counter == 0) {
             $scope.addPoints($scope.initialPoints);
             var finishPopup = $ionicPopup.alert({
@@ -81,13 +79,13 @@ angular.module('probability', ['app.services'])
             $scope.counter = 10;
             $ionicHistory.goBack();
         }
-    }
+    };
     
     $scope.addPoints = function(x) {
         var Ref = new Firebase(FIREBASE_URL + 'users/' + $rootScope.currentUser.regUser).update({
             points : $rootScope.currentUser.points + x
         });
-    }
+    };
     
     $scope.probalilityQuit = function () {
         console.log("probabilityQuit is called");
@@ -101,5 +99,5 @@ angular.module('probability', ['app.services'])
         } else {
             $ionicHistory.goBack();
         }
-    }
+    };
 }])
