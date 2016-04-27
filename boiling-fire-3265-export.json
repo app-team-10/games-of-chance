@@ -1,0 +1,109 @@
+{
+  "charity" : {
+    "-KGNYK4c81IrbowtjMYz" : {
+      "points" : 9999
+    },
+    "-KGNYalCtNl7XHVBUAYo" : {
+      "points" : 8888
+    },
+    "-KGNavWr8Wkz2W3VUkLM" : {
+      "points" : 1
+    }
+  },
+  "pools" : {
+    "-KGNlxLuNkYNuj4SOzSG" : {
+      "date" : 1461778372150,
+      "name" : "A Pool",
+      "poolees" : {
+        "-KGNlxP2btqsrSZ1P72h" : {
+          "fund" : 1000,
+          "poolee" : "5d9c748c-9284-4fa6-96d8-4876ce4bb4f7",
+          "username" : "bperson"
+        },
+        "-KGNmApc5yT_CyVfLq_y" : {
+          "fund" : 2000,
+          "poolee" : "80019c78-c8f7-4831-a021-498aa67081b2",
+          "username" : "aperson"
+        }
+      },
+      "poolowner" : {
+        "-KGNlxOvD86LGgL_mAE7" : {
+          "owner" : "5d9c748c-9284-4fa6-96d8-4876ce4bb4f7",
+          "username" : "bperson"
+        }
+      }
+    },
+    "-KGNlzzB-BcrzjGkdytX" : {
+      "date" : 1461778382915,
+      "name" : "B Pool",
+      "poolees" : {
+        "-KGNm-0F3CUHIyWR26_w" : {
+          "fund" : 3000,
+          "poolee" : "5d9c748c-9284-4fa6-96d8-4876ce4bb4f7",
+          "username" : "bperson"
+        }
+      },
+      "poolowner" : {
+        "-KGNm-0AwEsBtknjx8Bu" : {
+          "owner" : "5d9c748c-9284-4fa6-96d8-4876ce4bb4f7",
+          "username" : "bperson"
+        }
+      }
+    },
+    "-KGNm8tBkuyxn_IQE58X" : {
+      "date" : 1461778423489,
+      "name" : "C Pool",
+      "poolees" : {
+        "-KGNm8vDDH3b7E9PINsh" : {
+          "fund" : 5000,
+          "poolee" : "80019c78-c8f7-4831-a021-498aa67081b2",
+          "username" : "aperson"
+        }
+      },
+      "poolowner" : {
+        "-KGNm8vASNG9Sv_KkVoT" : {
+          "owner" : "80019c78-c8f7-4831-a021-498aa67081b2",
+          "username" : "aperson"
+        }
+      }
+    }
+  },
+  "users" : {
+    "5d9c748c-9284-4fa6-96d8-4876ce4bb4f7" : {
+      "date" : 1461774577497,
+      "donation" : 9999,
+      "email" : "bperson@qinyu.com",
+      "firstname" : "B",
+      "lastname" : "Person",
+      "points" : 99999999,
+      "regUser" : "5d9c748c-9284-4fa6-96d8-4876ce4bb4f7",
+      "userPools" : {
+        "-KGNlxRtDjiaoeRAvAc4" : {
+          "pool" : "-KGNlxLuNkYNuj4SOzSG"
+        },
+        "-KGNm-2Wqzz0_haMo1A4" : {
+          "pool" : "-KGNlzzB-BcrzjGkdytX"
+        }
+      },
+      "username" : "bperson"
+    },
+    "80019c78-c8f7-4831-a021-498aa67081b2" : {
+      "date" : 1461774395774,
+      "donation" : 8888,
+      "email" : "aperson@qinyu.com",
+      "firstname" : "A",
+      "lastname" : "Person",
+      "points" : 88888888,
+      "regUser" : "80019c78-c8f7-4831-a021-498aa67081b2",
+      "userPools" : {
+        "-KGNm8xLYtizJD12teZ9" : {
+          "pool" : "-KGNm8tBkuyxn_IQE58X"
+        },
+        "-KGNmArv0Q5D9_mUAxLT" : {
+          "pool" : "-KGNlxLuNkYNuj4SOzSG"
+        }
+      },
+      "username" : "aperson"
+    }
+  }
+}
