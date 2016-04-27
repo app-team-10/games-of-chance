@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives', 'firebase'])
 
-.constant('FIREBASE_URL', 'https://sweltering-heat-4284.firebaseio.com/')
+.constant('FIREBASE_URL', 'https://boiling-fire-3265.firebaseio.com/')
 
 .run(['$rootScope', '$location', '$ionicPlatform', function($rootScope, $location, $ionicPlatform) {
     
