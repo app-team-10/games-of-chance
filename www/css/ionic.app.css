@@ -9128,3 +9128,6 @@ img {
 .item:last-child {
   border-radius: 0 0 10px 10px;
   border-bottom-style: solid; }
+
+.tab-item.tab-item-active, .tab-item.active, .tab-item.activated {
+  color: red; }

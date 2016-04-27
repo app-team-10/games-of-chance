@@ -10,7 +10,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     views: {
       'tab2': {
         templateUrl: 'templates/uCLGamble.html',
-        controller: 'uCLGambleCtrl'
+        controller: 'selectionCtrl'
       }
     }
   })
